@@ -3,35 +3,29 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 
-const doctor = mongoose.Schema({
+const user = mongoose.Schema({
     username: String,
-    password: String
-
+    password: String,
+    role: {
+        type: String,
+        enum: ["doctor", "patient"],
+        default: "patient"
+    }
 });
 
-// register.pre(save, async (next) => {
-//     const salt = await bcrypt.genSalt(10);
-//     this.password = await bcrypt.hash(this.password);
-// })
-
-
-
-doctor.pre("save", async function (next) {
+user.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    // next();
 })
 
-
-doctor.methods.getsigntoken = function () {
+user.methods.getsigntoken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE
     });
 }
 
-
-doctor.methods.matchpassword = function (enterPassword) {
+user.methods.matchpassword = function (enterPassword) {
     return bcrypt.compare(enterPassword, this.password);
 }
 
-module.exports = mongoose.model("doctor", doctor);
+module.exports = mongoose.model("user", user);

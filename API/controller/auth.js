@@ -1,6 +1,6 @@
 // const { create } = require("../model/users/doctor");
 const bcrypt = require("bcryptjs");
-const doctor = require("../model/users/doctor");
+const doctor = require("../model/user");
 // Register User
 exports.register = async (req, res, next) => {
 
@@ -15,27 +15,30 @@ exports.register = async (req, res, next) => {
     });
 }
 
-exports.login = async (req, res, next) => {
+// exports.login = async (req, res, next) => {
 
-    const { username, password } = req.body;
-    console.log(username, password);
-    // validation of data
-    if (!username || !password) {
-        console.error("enter Correct username password");
-    }
+//     const { username, password, role } = req.body;
 
-    const result = await doctor.findOne({ username }).select({ password });
-    // console.log(req.body);
-    console.log(result);
-    const isMatch = bcrypt.compare(password, result.password);
+//     console.log(username, password, role);
+//     // validation of data
+//     if (!username || !password) {
+//         console.error("User not Found in db");
+//     }
 
-    const token = result.getsigntoken();
+//     const result = await doctor.findOne({ username }).select({ password });
+//     // console.log(req.body);
+//     console.log(result);
+//     const isMatch = bcrypt.compare(password, result.password);
+//     if (!isMatch) {
+//         console.error("Username or Password Mismatch");
+//     }
+//     const token = result.getsigntoken();
 
-    res.status(201).json({
-        success: true,
-        token
-    });
-}
+//     res.status(201).json({
+//         success: true,
+//         token
+//     });
+// }
 
 
 
