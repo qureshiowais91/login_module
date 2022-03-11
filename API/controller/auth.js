@@ -24,20 +24,30 @@ exports.login = async (req, res, next) => {
         console.error("enter Correct username password");
     }
 
-    const result = await doctor.findOne({ username }).select({ password });
-    // console.log(req.body);
-    console.log(result);
-    const isMatch = bcrypt.compare(password, result.password);
+    const result = await doctor.findOne({ username });
 
-    const token = result.getsigntoken();
+    if (result && (await bcrypt.compare(password, result.password))) {
 
-    res.status(201).json({
-        success: true,
-        token
-    });
+        const token = result.getsigntoken();
+        const option = {
+            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 24 * 60),
+            httpOnly: true
+        }
+
+        res
+            .status(201)
+            .cookie('token', token, option)
+            .json({
+                success: true,
+                token
+            });
+    } else {
+        res.status(500).json({
+            success: false
+        })
+    }
+
 }
-
-
 
 exports.registerUser = async (req, res, next) => {
 
