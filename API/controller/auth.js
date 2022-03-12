@@ -1,18 +1,31 @@
-// const { create } = require("../model/users/doctor");
+// const { create } = require("../model/users/user");
 const bcrypt = require("bcryptjs");
-const doctor = require("../model/users/doctor");
+const user = require("../model/users/user");
+const jwt = require("jsonwebtoken");
 // Register User
 exports.register = async (req, res, next) => {
 
-    const result = await doctor.create(req.body);
-    // console.log(req.body);
+    const result = await user.create(req.body);
+    if (req.body.username !== '' && req.body.password !== '') {
+        // console.log(req.body);
+        try {
+            const token = jwt.sign({ id: result._id }, process.env.JWT_SECRET, {
+                expiresIn: process.env.JWT_EXPIRE
+            });
 
-    const token = result.getsigntoken();
-
-    res.status(201).json({
-        success: true,
-        token
-    });
+            res.status(201).json({
+                success: true,
+                token
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        res.status(400).json({
+            success: false,
+            msg: "Bad Request"
+        });
+    }
 }
 
 exports.login = async (req, res, next) => {
@@ -24,7 +37,7 @@ exports.login = async (req, res, next) => {
         console.error("enter Correct username password");
     }
 
-    const result = await doctor.findOne({ username });
+    const result = await user.findOne({ username });
 
     if (result && (await bcrypt.compare(password, result.password))) {
 
@@ -51,7 +64,7 @@ exports.login = async (req, res, next) => {
 
 exports.registerUser = async (req, res, next) => {
 
-    const result = await doctor.find(req.body);
+    const result = await user.find(req.body);
 
     res.status(200).json({
         success: true,
