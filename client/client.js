@@ -1,5 +1,5 @@
-const login = "http://127.0.0.1:3000/api/auth/login";
-const register = "http://127.0.0.1:3000/api/auth/register";
+const login = "http://127.0.0.1:3030/api/auth/login";
+const register = "http://127.0.0.1:3030/api/auth/register";
 
 const username = document.querySelector('#username');
 const password = document.querySelector('#password');

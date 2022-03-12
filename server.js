@@ -4,7 +4,6 @@ const connectDB = require("./API/config/connectDB");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-
 dotenv.config({ path: '/home/owais/Project/Wellness_v1/API/config/.env' })
 connectDB(process.env.URI);
 
@@ -20,7 +19,6 @@ connectDB(process.env.URI);
 //     next();
 // });
 
-
 const app = express();
 
 var corsOptions = {
@@ -32,7 +30,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/api/auth", register);
+// app.use("api/appointment", appointment);
 
-app.listen(3000, () => {
+app.listen(3030, () => {
     console.log("Server Connected");
 });
