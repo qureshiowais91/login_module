@@ -1,11 +1,12 @@
 // const { create } = require("../model/users/user");
 const bcrypt = require("bcryptjs");
-const user = require("../model/users/user");
+const user = require("../model/user");
 const jwt = require("jsonwebtoken");
 // Register User
 exports.register = async (req, res, next) => {
 
     const result = await user.create(req.body);
+
     if (req.body.username !== '' && req.body.password !== '') {
         // console.log(req.body);
         try {
@@ -41,7 +42,10 @@ exports.login = async (req, res, next) => {
 
     if (result && (await bcrypt.compare(password, result.password))) {
 
-        const token = result.getsigntoken();
+        const token = jwt.sign({ id: result._id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRE
+        });
+
         const option = {
             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 24 * 60),
             httpOnly: true

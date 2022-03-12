@@ -30,7 +30,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/api/auth", register);
-// app.use("api/appointment", appointment);
+app.use("api/appointment", appointment);
 
 app.listen(3030, () => {
     console.log("Server Connected");
