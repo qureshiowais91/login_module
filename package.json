@@ -4,7 +4,7 @@
   "description": "Login,Register,Appoinment,Add to Cart,Order",
   "main": "index.js",
   "scripts": {
-    "start": "node server -p $PORT" // make sure to have $PORT in here
+    "start": "node server.js" 
   },
   "author": "Qureshi Owais",
   "license": "ISC",
