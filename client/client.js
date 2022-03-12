@@ -1,4 +1,5 @@
 const login = "http://127.0.0.1:3000/api/auth/login";
+const register = "http://127.0.0.1:3000/api/auth/register";
 
 const username = document.querySelector('#username');
 const password = document.querySelector('#password');
@@ -21,8 +22,9 @@ Myform.addEventListener('submit', (e) => {
         }
     }
 
-    fetch(login, options)
+    fetch(register, options)
         .then(res => res.json())
         .then(res => document.write(res.token));
 })
+
 
