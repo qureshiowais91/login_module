@@ -28,7 +28,7 @@ connectDB("mongodb+srv://owais91:1kOyxuwdWM0gs4TX@cluster0.btnyu.mongodb.net/myF
 const app = express();
 
 var corsOptions = {
-    origin: 'http://127.0.0.1:5500/client/index.html',
+    origin: 'http://127.0.0.1:5500',
     credentials: true
 };
 
@@ -37,6 +37,7 @@ app.use(express.json());
 
 app.use("/api/auth", register);
 app.use("/api/doctor", account);
+
 
 app.listen(3000, () => {
     console.log(`Server Connected 3000`);
