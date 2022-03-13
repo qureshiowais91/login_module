@@ -3,10 +3,20 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const user = mongoose.Schema({
-    username: String,
-    password: String,
+    username: {
+        type: String,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: [true],
+        minlength: [4],
+        select: false
+    },
     role: {
-        enum: ['doctor', 'patient']
+        type: String,
+        enum: ['doctor', 'patient'],
+        default: 'patient'
     }
 });
 
