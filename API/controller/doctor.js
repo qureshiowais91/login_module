@@ -11,7 +11,7 @@ exports.account = async (req, res, next) => {
         console.log(req.body.username);
         res.status(200).json({
             success: true,
-            data: doctor
+            data: doctor    
         })
     } catch (error) {
         res.status(403).status({

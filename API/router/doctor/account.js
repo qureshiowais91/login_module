@@ -6,7 +6,7 @@ const { protect } = require('../../middleware/auth');
 router
     .route("/account/")
     .post(account)
-    .get(protect, allaccounts)
+    .get(allaccounts)
 
 router
     .route('/account/:id')

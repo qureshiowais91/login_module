@@ -31,11 +31,8 @@ const loginfun = async (e) => {
 const getAccountInfo = async (e, token) => {
 
     const options = {
-        method: 'POST',
-        body: JSON.stringify({
-            username: username.value,
-        }),
-        credentials: 'include',
+        method: 'GET',
+
         headers: {
             'Content-Type': 'application/json',
             'autherization': `Bearer ${token}`
@@ -49,12 +46,8 @@ const getAccountInfo = async (e, token) => {
 Myform.addEventListener('submit', (e) => {
     loginfun(e)
         .then(res => res.json())
-        .then(res => getAccountInfo(e, res.token))
-        .then(res => res.json())
-        .then(res => document.write(res));
+        .then(res => getAccountInfo(e, res.token).then(res=>console.log(res)))
+       
+
 });
-
-
-
-
 
