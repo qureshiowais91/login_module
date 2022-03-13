@@ -4,7 +4,9 @@ const user = require("../model/user");
 const jwt = require("jsonwebtoken");
 const { json } = require("express/lib/response");
 // Register User
+
 exports.register = async (req, res, next) => {
+    console.log(process.env.JWT_SECRET);
     // get account object
     const account = await user.create(req.body);
 
@@ -37,6 +39,7 @@ exports.register = async (req, res, next) => {
 
 
 exports.login = async (req, res, next) => {
+    console.log(process.env.JWT_SECRET);
 
     const { username, password } = req.body;
 
