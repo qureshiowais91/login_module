@@ -4,9 +4,7 @@ const user = require("../model/user");
 //  POST
 //  return account details as per  ID
 exports.account = async (req, res, next) => {
-    console.log(req.body.username);
-    console.log(req.body);
-    try {
+  try {
         const doctor = await user.find(req.body);
         console.log(req.body.username);
         res.status(200).json({
@@ -20,16 +18,16 @@ exports.account = async (req, res, next) => {
     }
 }
 
-exports.removeaccount = async (req, res, next) => {
-    console.log(req.params.id);
-    await user.findByIdAndRemove(req.params.id);
+// exports.removeaccount = async (req, res, next) => {
+//     console.log(req.params.id);
+//     await user.findByIdAndRemove(req.params.id);
    
-    res.status(200).json({
-        success: true,
-        data: []
-    });
-    next();
-}
+//     res.status(200).json({
+//         success: true,
+//         data: []
+//     });
+//     next();
+// }
 
 // exports.deleteValue = async (req, res, next) => {
 //     try {
@@ -57,4 +55,5 @@ exports.allaccounts = async (req, res, next) => {
         success: true,
         result: result
     });
+    next();
 }

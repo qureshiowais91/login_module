@@ -5,11 +5,7 @@ const { protect } = require('../../middleware/auth');
 
 router
     .route("/account/")
-    .post(account)
-    .get(allaccounts)
+    .get(allaccounts);
 
-router
-    .route('/account/:id')
-    .delete(removeaccount);
 
 module.exports = router;
