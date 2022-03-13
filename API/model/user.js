@@ -17,7 +17,8 @@ const user = mongoose.Schema({
         type: String,
         enum: ['doctor', 'patient'],
         default: 'patient'
-    }
+    },
+
 });
 
 user.pre("save", async function (next) {

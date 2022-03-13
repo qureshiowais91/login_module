@@ -16,19 +16,32 @@ exports.protect = async (req, res, next) => {
 
     if (!token) {
         return res.status(403).json({
-            success:"false"
+            success: "false"
         });
     }
 
     try {
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log(decoded);
         req.user = await user.findById(decoded.id);
         next();
     } catch (error) {
+
         return res.status(403).json({
-            success:"false"
+            success: "false"
         });
     }
 
 }
+
+exports.authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+           return next(Error({meg:"err"}));
+        }
+        else {
+            next();
+        }
+    }
+}
+
