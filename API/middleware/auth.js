@@ -15,7 +15,9 @@ exports.protect = async (req, res, next) => {
     // }
 
     if (!token) {
-        return next({ msg: 'not auth', statusCode: 403 });
+        return res.status(403).json({
+            success:"false"
+        });
     }
 
     try {
@@ -24,7 +26,9 @@ exports.protect = async (req, res, next) => {
         req.user = await user.findById(decoded.id);
         next();
     } catch (error) {
-        return next({ msg: 'not auth', statusCode: 403 });
+        return res.status(403).json({
+            success:"false"
+        });
     }
 
 }
