@@ -1,12 +1,14 @@
-const login = "http://127.0.0.1:3030/api/auth/login";
-const register = "http://restnewapp123.herokuapp.com/api/auth/register";
+
+const login = "https://logink123.herokuapp.com/api/auth/login/";
+const register = "https://logink123.herokuapp.com/api/auth/register/";
+const allaccounts = "https://logink123.herokuapp.com/api/doctor/account/";
 
 const username = document.querySelector('#username');
 const password = document.querySelector('#password');
-
 const Myform = document.querySelector('.myform');
 
-Myform.addEventListener('submit', (e) => {
+
+const loginfun = async (e) => {
     e.preventDefault();
     console.log(username.value);
     console.log(password.value);
@@ -22,9 +24,37 @@ Myform.addEventListener('submit', (e) => {
         }
     }
 
-    fetch(register, options)
+    return fetch(login, options);
+
+}
+
+const getAccountInfo = async (e, token) => {
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({
+            username: username.value,
+        }),
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'autherization': `Bearer ${token}`
+        }
+
+    }
+    return fetch(allaccounts, options);
+}
+
+
+Myform.addEventListener('submit', (e) => {
+    loginfun(e)
         .then(res => res.json())
-        .then(res => document.write(res.token));
-})
+        .then(res => getAccountInfo(e, res.token))
+        .then(res => res.json())
+        .then(res => document.write(res));
+});
+
+
+
 
 

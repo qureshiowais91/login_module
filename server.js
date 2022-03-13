@@ -28,7 +28,7 @@ connectDB("mongodb+srv://owais91:1kOyxuwdWM0gs4TX@cluster0.btnyu.mongodb.net/myF
 const app = express();
 
 var corsOptions = {
-    origin: '*',
+    origin: 'http://127.0.0.1:5500/client/index.html',
     credentials: true
 };
 
