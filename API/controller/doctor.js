@@ -2,13 +2,22 @@ const user = require("../model/user");
 
 //  /api/doctor/account
 //  POST
-//  return account detailsexports.allaccounts = async (req, res, next) => {
+//  return account details
 
-    const result = await user.find(req.body);
+exports.allaccounts = async (req, res, next) => {
+    try {
 
-    res.status(200).json({
-        success: true,
-        result: result
-    });
+        const result = await user.find(req.body);
+
+        res.status(200).json({
+            success: true,
+            result: result
+        });
+    } catch (error) {
+        res.status(403).json({
+            success:false
+        })
+        console.log(error);
+    }
     next();
 }
