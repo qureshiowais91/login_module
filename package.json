@@ -4,7 +4,7 @@
   "description": "Login,Register,Appoinment,Add to Cart,Order",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js" 
+    "start": "node server.js"
   },
   "author": "Qureshi Owais",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.5",
-    "package": "^1.0.1"
+    "package": "^1.0.1",
+    "package.json": "^2.0.1"
   }
 }
