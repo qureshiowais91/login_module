@@ -37,11 +37,10 @@ exports.protect = async (req, res, next) => {
 exports.authorize = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-           return next(Error({meg:"err"}));
+            return next(res.status(403));
         }
         else {
             next();
         }
     }
 }
-

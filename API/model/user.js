@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
+// used in pre
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+
+
+const profileSchema = mongoose.Schema({
+})
+
+
 
 const user = mongoose.Schema({
     username: {
@@ -14,12 +20,26 @@ const user = mongoose.Schema({
         select: false
     },
     role: {
-        type: String,
-        enum: ['doctor', 'patient'],
-        default: 'patient'
+        String,
+        enum: ['doctor', 'patient']
     },
-
+    profile: {
+        email: {
+            String
+        },
+        name: {
+            String
+        },
+        address: {
+            String
+        },
+        fees: {
+            Number
+        }
+    }
 });
+// doctor's profile
+
 
 user.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
