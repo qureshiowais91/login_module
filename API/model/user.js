@@ -3,11 +3,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 
-const profileSchema = mongoose.Schema({
-})
-
-
-
 const user = mongoose.Schema({
     username: {
         type: String,
@@ -20,7 +15,7 @@ const user = mongoose.Schema({
         select: false
     },
     role: {
-        String,
+        type:String,
         enum: ['doctor', 'patient']
     },
     profile: {

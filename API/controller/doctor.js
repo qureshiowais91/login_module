@@ -9,7 +9,7 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.allaccounts = async (req, res, next) => {
     try {
 
-        const accounts = await user.find(req.body);
+        let accounts = await user.find(req.body);
 
         if (!accounts) {
             throw new ErrorResponse(`Unable to Access Account info`, 403);
@@ -28,24 +28,22 @@ exports.allaccounts = async (req, res, next) => {
 // update profile in doctor's document
 exports.profile = async (req, res, next) => {
     try {
-        const { username } = req.params;
-        let foundUser = await user.findOneAndUpdate( username , { profile: req.body },{
-            new:true,
-            runValidators:true
-        });
 
-        if (!foundUser) {
-            throw new ErrorResponse(`Username not Found`, 404);
-        } else {
+        let updatedUser = await user.findOneAndUpdate({ _id: req.user._id }, { profile: req.body });
 
-            res
-                .status(200)
-                .json({
-                    success: true,
-                    user:foundUser
-                });
-
+        if (!updatedUser) {
+            throw new ErrorResponse('Unable to Update Profile', 500);
         }
+        // console.log(`found user ${foundUser}`);
+        // console.log(`updated user ${updatedUser}`);
+        // console.log(`username ${username}`);
+        console.log(`token ${req.user}`);
+        res
+            .status(200)
+            .json({
+                success: true,
+                user: updatedUser
+            });
 
     } catch (error) {
         next(error);

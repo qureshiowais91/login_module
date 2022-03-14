@@ -13,6 +13,7 @@ exports.register = async (req, res, next) => {
         if (!account) {
             throw new ErrorResponse('Unable to Register', 302);
         }
+        console.log(account);   
         const token = jwt.sign({ id: account._id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRE
         });

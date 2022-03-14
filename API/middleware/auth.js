@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const user = require('../model/user');
-
+const ErrorResponse = require('../utils/errorResponse');
 exports.protect = async (req, res, next) => {
     let token;
 
@@ -14,22 +14,16 @@ exports.protect = async (req, res, next) => {
     //     token=req.cookies.token;
     // }
 
-    if (!token) {
-        return res.status(403).json({
-            success: "false"
-        });
-    }
-
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!token) {
+            throw new ErrorResponse(`Unauthorize Access`, 403);
+        }
+        let decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log(decoded);
         req.user = await user.findById(decoded.id);
         next();
     } catch (error) {
-
-        return res.status(403).json({
-            success: "false"
-        });
+        next(error);
     }
 
 }
@@ -37,7 +31,7 @@ exports.protect = async (req, res, next) => {
 exports.authorize = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return next(res.status(403));
+            return next(new ErrorResponse(`Unauthorize Access`,500));
         }
         else {
             next();
