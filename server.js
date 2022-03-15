@@ -24,15 +24,10 @@ const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:5500', 'http:
 // specify the allowed domains and set corsOptions to check them
 var whitelist = ['http://localhost:5500', 'http://127.0.0.1:5500'];
 var corsOptions = {
-<<<<<<< HEAD
     origin: function (origin, callback) {
         var originWhitelisted = whitelist.indexOf(origin) !== -1;
         callback(null, originWhitelisted);
     }
-=======
-    origin: 'http://localhost:5500','http://127.0.0.1:5500',
-    credentials: true
->>>>>>> cb1ba3f71f8afba44f4551196a3cce6adaaad84f
 };
 
 app.use(express.json());
