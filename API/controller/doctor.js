@@ -19,8 +19,6 @@ exports.allaccounts = async (req, res, next) => {
             success: true,
             result: accounts
         });
-
-
     } catch (error) {
         next(error)
     }
@@ -29,7 +27,14 @@ exports.allaccounts = async (req, res, next) => {
 exports.profile = async (req, res, next) => {
     try {
 
-        let updatedUser = await user.findOneAndUpdate({ _id: req.user._id }, { profile: req.body });
+        let updatedUser = await user
+            .findOneAndUpdate({ _id: req.user._id }, { profile: req.body },{new:true});
+
+        if (!updatedUser) {
+            throw new ErrorResponse('Unable to Update Profile', 500);
+        }
+
+        updatedUser = await user.find({ _id: req.user._id });
 
         if (!updatedUser) {
             throw new ErrorResponse('Unable to Update Profile', 500);
@@ -44,8 +49,9 @@ exports.profile = async (req, res, next) => {
                 success: true,
                 user: updatedUser
             });
-
     } catch (error) {
         next(error);
     }
 }
+
+

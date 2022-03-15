@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 // used in pre
 const bcrypt = require("bcryptjs");
-
-
+const { isEmail } = require("validator");
+ //api/user/account
 const user = mongoose.Schema({
     username: {
         type: String,
@@ -15,30 +15,69 @@ const user = mongoose.Schema({
         select: false
     },
     role: {
-        type:String,
+        type: String,
         enum: ['doctor', 'patient']
     },
+    //api/user/account
+    //d/p/m/l
     profile: {
         email: {
-            String
+            type: String,
+            validate: [isEmail, 'invalid email']
         },
-        name: {
-            String
+        mobile: {
+            type: String,
+            match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
+            //regex works for the formats (123) 456-7890 or 123-456-7890
+        },
+        full_name: {
+            type: String,
+            MIN: [3],
+            MAX: [100]
         },
         address: {
-            String
+            type: String,
+            MIN: [10],
+            MAX: [100]
+        },
+        birthdate: {
+            type: Date
+        }
+    },
+    //api/doctor/account
+    doctor: {
+        speciality: {   
+            type: String,
+            MIN: [3],
+            MAX: [100]
         },
         fees: {
-            Number
-        }
+            type: Number
+        },
+        opentime: {
+            type: Date
+        },
+        closetime: {
+            type: Date
+        },
+        weekday: [{
+            type: String,
+        }]
+    },
+    //api/patient/account
+    patient:{
+        
     }
 });
+
 // doctor's profile
-
-
 user.pre("save", async function (next) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+    } catch (error) {
+        next(error);
+    }
 })
 
 module.exports = mongoose.model("user", user);
