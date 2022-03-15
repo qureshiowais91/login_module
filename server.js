@@ -12,9 +12,10 @@ dotenv.config({ path: "/home/owais/Project/login_0_1/login_module/API/config/.en
 connectDB(process.env.MONGODB_URI);
 
 const app = express();
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:5500', 'http://127.0.0.1:3500', 'http://localhost:4500'];
 
 var corsOptions = {
-    origin: 'http://127.0.0.1:5500',
+    origin: allowedOrigins,
     credentials: true
 };
 
