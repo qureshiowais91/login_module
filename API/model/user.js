@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 // used in pre
 const bcrypt = require("bcryptjs");
 const { isEmail } = require("validator");
- //api/user/account
-const user = mongoose.Schema({
+//api/user/account
+const userSchema = mongoose.Schema({
     username: {
         type: String,
         unique: true
@@ -19,7 +19,6 @@ const user = mongoose.Schema({
         enum: ['doctor', 'patient']
     },
     //api/user/account
-    //d/p/m/l
     profile: {
         email: {
             type: String,
@@ -44,34 +43,18 @@ const user = mongoose.Schema({
             type: Date
         }
     },
-    //api/doctor/account
-    doctor: {
-        speciality: {   
-            type: String,
-            MIN: [3],
-            MAX: [100]
-        },
-        fees: {
-            type: Number
-        },
-        opentime: {
-            type: Date
-        },
-        closetime: {
-            type: Date
-        },
-        weekday: [{
-            type: String,
-        }]
-    },
-    //api/patient/account
-    patient:{
-        
-    }
 });
 
+// return
+// {
+//     success:true,
+//     token:
+//     id:
+//     role:
+// }
+
 // doctor's profile
-user.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
     try {
         const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
@@ -80,7 +63,7 @@ user.pre("save", async function (next) {
     }
 })
 
-module.exports = mongoose.model("user", user);
+module.exports = mongoose.model("user", userSchema);
 
 // register.pre(save, async (next) => {
 //     const salt = await bcrypt.genSalt(10);
