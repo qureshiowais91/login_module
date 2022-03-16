@@ -1,57 +1,45 @@
-const user = require("../model/user");
+const doctor = require("../model/doctor");
 
-// custome class that send error Object to error middleware
+// custom class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
-//  /api/doctor/account
-//  POST
-//  return account details
 
-exports.allaccounts = async (req, res, next) => {
+// only accesible by Docters
+//api/docter/account
+//PUT
+exports.createDoctor = async (req, res, next) => {
     try {
+        
+        console.log(req.user);
+        console.log(req.body);
 
-        let accounts = await user.find(req.body);
+        if (!req.user._id && !req.body) {
+            throw new ErrorResponse(`Missing:Request Body or Token`, 500);
+        }
+       
+        
+        let userId = req.user._id;
 
-        if (!accounts) {
-            throw new ErrorResponse(`Unable to Access Account info`, 403);
+        let {
+            speciality,
+            fees,
+            opentime,
+            closetime,
+        } = req.body;
+
+        let updateDocter = await doctor.create({
+            userId, speciality, fees, opentime, closetime
+        });
+
+        if (!updateDocter) {
+            throw new ErrorResponse(`Unable to Update, ROLE:Docter`, 500);
         }
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
-            result: accounts
+            data: updateDocter,
         });
     } catch (error) {
         next(error)
     }
 }
-// update profile in doctor's document
-exports.profile = async (req, res, next) => {
-    try {
-
-        let updatedUser = await user
-            .findOneAndUpdate({ _id: req.user._id }, { profile: req.body },{new:true});
-
-        if (!updatedUser) {
-            throw new ErrorResponse('Unable to Update Profile', 500);
-        }
-
-        updatedUser = await user.find({ _id: req.user._id });
-
-        if (!updatedUser) {
-            throw new ErrorResponse('Unable to Update Profile', 500);
-        }
-        // console.log(`found user ${foundUser}`);
-        // console.log(`updated user ${updatedUser}`);
-        // console.log(`username ${username}`);
-        console.log(`token ${req.user}`);
-        res
-            .status(200)
-            .json({
-                success: true,
-                user: updatedUser
-            });
-    } catch (error) {
-        next(error);
-    }
-}
-
 

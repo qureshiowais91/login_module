@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const doctoreSchema = mongoose.Schema({
-  profile_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+ user_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   speciality: {
     type: String,
   },
