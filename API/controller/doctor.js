@@ -1,65 +1,103 @@
-const {doctor} = require("../model/user");
-const mongoose =require("mongoose");
-
-// custom class that send error Object to error middleware
+// const { create } = require("../model/doctors/doctor");
+const bcrypt = require("bcryptjs");
+const doctor = require("../model/doctor");
+const jwt = require("jsonwebtoken");
+// custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
+// Register doctor
 
-// only accesible by Docters
-//api/docter/account
-//PUT
-exports.createDoctor = async (req, res, next) => {
+exports.register = async (req, res, next) => {
+
     try {
 
-        console.log(req.user);
-        console.log(req.body);
-
-        if (!req.user._id && !req.body) {
-            throw new ErrorResponse(`Missing:Request Body or Token`, 500);
+        const account = await doctor.create(req.body);
+        if (!account) {
+            throw new ErrorResponse('Unable to Register', 302);
         }
 
-        let user_id = mongoose.Types.ObjectId(req.user._id);
-
-        let {
-            speciality,
-            fees,
-            opentime,
-            closetime,
-        } = req.body;
-
-        let updateDocter = await doctor.create({
-            user_id, speciality, fees, opentime, closetime
+        const token = jwt.sign({ id: account._id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRE
         });
-
-        if (!updateDocter) {
-            throw new ErrorResponse(`Unable to Update, ROLE:Docter`, 500);
+        if (!token) {
+            throw new ErrorResponse(`Can't Get Account Token`, 302);
         }
 
-        res.status(201).json({
-            success: true,
-            data: updateDocter,
-        });
+        const option = {
+            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 24 * 60),
+            httpOnly: true
+        }
+
+        res
+            .status(201)
+            .cookie('token', token, option)
+            .json({
+                success: true,
+                token: token
+            });
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
 
-// "speciality": "MBBS",
-//         "fees": 500,
-//         "opentime": "1970-01-20T01:37:26.018Z",
-//         "closetime": "1970-01-20T01:37:26.018Z",
-
-
-exports.showDocters = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     try {
-        const found = await doctor.find({}).populate({path:"user_id"});
+        const { username, password } = req.body;
+        //find doctor 
+        const account = await doctor.findOne({ username }).select('+password');
+
+        //account invalid 
+        if (!account) {
+            throw new ErrorResponse('account Does Not Exist', 403);
+        }
+
+        // check password
+        const passwordCheck = await bcrypt.compare(password, account.password);
+
+        if (!passwordCheck) {
+            throw new ErrorResponse('Invalid username or Password', 403);
+        }
+
+        // create signed token
+        const token = jwt.sign({ id: account._id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRE
+        });
+
+        // set option for cookie
+        const option = {
+            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 24 * 60),
+            httpOnly: true
+        }
 
         res
             .status(200)
+            .cookie('token', token, option)
             .json({
                 success: true,
-                data: found
+                token
             })
     } catch (error) {
         next(error);
     }
 }
+
+exports.updateAccountDetls = (req, res, next) => {
+    try {
+        const accountUpdateStatus = await doctor
+            .findByIdAndUpdate({ id: req.user._id }, req.body);
+            
+        if (!accountUpdateStatus) {
+            throw new ErrorResponse(`Unable to Update UserId:${req.user._id}`, 400);
+        }
+        res
+            .status(203)
+            .json({
+                succes: true,
+                data: accountUpdateStatus
+            });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+

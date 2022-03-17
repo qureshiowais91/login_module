@@ -1,10 +1,10 @@
-const login = "http://localhost:3000/api/auth/register";
+const login = "https://logink123.herokuapp.com/api/auth/register";
 
 const options = {
     method: 'POST',
     body: JSON.stringify({
-        username: "wseefsef",
-        password: "uersefsg3Two"
+        username: "rgrgrrg",
+        password: "uerrsdrg3Two"
     }),
     headers: {
         'Content-Type': 'application/json'

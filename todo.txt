@@ -1,0 +1,11 @@
+/api/auth/register
+    all info for register a user
+        return <access token>
+
+/api/auth/login
+    login user
+        return <access token>
+
+    
+/api/user/account
+    

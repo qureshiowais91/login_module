@@ -6,9 +6,7 @@ const errorHandler = require("./API/middleware/error");
 
 //improt Router
 
-const user = require("./API/router/user");
-const doctor = require("./API/router/doctor");
-const authentication = require("./API/router/auth");
+const registerDoctor = require("./API/router/doctor/auth");
 
 // Cors and Assing PORT
 const cors = require("cors");
@@ -34,9 +32,8 @@ var corsOptions = {
 //Middleware
 app.use(express.json());
 // Router
-app.use("/api/auth", cors(corsOptions), authentication);
-app.use("/api/user", cors(corsOptions), user);
-app.use("/api/docter", cors(corsOptions), doctor);
+app.use("/doctor", cors(corsOptions), registerDoctor);
+
 
 //  Middleware
 app.use(errorHandler);
