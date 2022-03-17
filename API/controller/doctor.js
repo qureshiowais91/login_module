@@ -1,4 +1,5 @@
-const doctor = require("../model/doctor");
+const {doctor} = require("../model/user");
+const mongoose =require("mongoose");
 
 // custom class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
@@ -8,16 +9,15 @@ const ErrorResponse = require("../utils/errorResponse");
 //PUT
 exports.createDoctor = async (req, res, next) => {
     try {
-        
+
         console.log(req.user);
         console.log(req.body);
 
         if (!req.user._id && !req.body) {
             throw new ErrorResponse(`Missing:Request Body or Token`, 500);
         }
-       
-        
-        let userId = req.user._id;
+
+        let user_id = mongoose.Types.ObjectId(req.user._id);
 
         let {
             speciality,
@@ -27,7 +27,7 @@ exports.createDoctor = async (req, res, next) => {
         } = req.body;
 
         let updateDocter = await doctor.create({
-            userId, speciality, fees, opentime, closetime
+            user_id, speciality, fees, opentime, closetime
         });
 
         if (!updateDocter) {
@@ -43,3 +43,23 @@ exports.createDoctor = async (req, res, next) => {
     }
 }
 
+// "speciality": "MBBS",
+//         "fees": 500,
+//         "opentime": "1970-01-20T01:37:26.018Z",
+//         "closetime": "1970-01-20T01:37:26.018Z",
+
+
+exports.showDocters = async (req, res, next) => {
+    try {
+        const found = await doctor.find({}).populate({path:"user_id"});
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                data: found
+            })
+    } catch (error) {
+        next(error);
+    }
+}
