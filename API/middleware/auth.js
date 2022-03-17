@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-const user = require('../model/user');
+const {user} = require('../model/user');
 const ErrorResponse = require('../utils/errorResponse');
+
 exports.protect = async (req, res, next) => {
     let token;
 
@@ -31,7 +32,7 @@ exports.protect = async (req, res, next) => {
 exports.authorize = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return next(new ErrorResponse(`Unauthorize Access`,500));
+            return next(new ErrorResponse(`Unauthorize Access ${req.user.role}`, 500));
         }
         else {
             next();
