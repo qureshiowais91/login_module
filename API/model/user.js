@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { isEmail } = require("validator");
 //api/user/account
+
+// user have account ID
 const userSchema = mongoose.Schema({
     username: {
         type: String,
@@ -18,8 +20,12 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ['doctor', 'patient']
     },
-    //api/user/account
     profile: {
+        fullname: {
+            type: String,
+            MIN: [3],
+            MAX: [100]
+        },
         email: {
             type: String,
             validate: [isEmail, 'invalid email']
@@ -29,20 +35,16 @@ const userSchema = mongoose.Schema({
             match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
             //regex works for the formats (123) 456-7890 or 123-456-7890
         },
-        full_name: {
-            type: String,
-            MIN: [3],
-            MAX: [100]
+        birthdate: {
+            type: Date
         },
         address: {
             type: String,
             MIN: [10],
             MAX: [100]
-        },
-        birthdate: {
-            type: Date
         }
     },
+
 });
 
 // return
@@ -53,7 +55,6 @@ const userSchema = mongoose.Schema({
 //     role:
 // }
 
-// doctor's profile
 userSchema.pre("save", async function (next) {
     try {
         const salt = await bcrypt.genSalt(10);
@@ -63,7 +64,26 @@ userSchema.pre("save", async function (next) {
     }
 })
 
-module.exports = mongoose.model("user", userSchema);
+const doctoreSchema = mongoose.Schema({
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    speciality: {
+        type: String,
+    },
+    fees: {
+        type: Number,
+    },
+    opentime: {
+        type: Date,
+    },
+    closetime: {
+        type: Date
+    }
+});
+
+const doctor = mongoose.model("Doctor", doctoreSchema);
+const user = mongoose.model("User", userSchema);
+
+module.exports = { doctor, user };
 
 // register.pre(save, async (next) => {
 //     const salt = await bcrypt.genSalt(10);

@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const doctor = require("./doctor");
-const user = require("./user");
+
 
 const patientSchema = mongoose.Schema({
-    profile_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     cart: {
         appoinment: {
             doctor_id: { type: mongoose.Schema.Types.ObjectId, ref: "doctor" },
@@ -17,8 +16,19 @@ const patientSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('patient', patientSchema);
+module.exports = mongoose.model('Patient', patientSchema);
 
 
 
+// only accesible by patient 
+//api/patient/cart
+//POST
+//  id,token,
+// 
+   cart:{
+       appoinment:{
+           doctorAccount_id:{
 
+           }
+       }
+   }
