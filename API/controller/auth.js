@@ -1,6 +1,6 @@
 // const { create } = require("../model/users/user");
 const bcrypt = require("bcryptjs");
-const user = require("../model/user");
+const { user } = require("../model/user");
 const jwt = require("jsonwebtoken");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
@@ -9,11 +9,12 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.register = async (req, res, next) => {
 
     try {
+
         const account = await user.create(req.body);
         if (!account) {
             throw new ErrorResponse('Unable to Register', 302);
         }
-        console.log(account);   
+
         const token = jwt.sign({ id: account._id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRE
         });
@@ -25,13 +26,19 @@ exports.register = async (req, res, next) => {
             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 24 * 60),
             httpOnly: true
         }
-
+        // return
+        // {
+        //     success:true,
+        //     token:
+        //     id:
+        //     role:
+        // }
         res
             .status(201)
             .cookie('token', token, option)
             .json({
                 success: true,
-                token
+                token: token
             });
     } catch (error) {
         next(error);
@@ -46,7 +53,7 @@ exports.login = async (req, res, next) => {
 
         //account invalid 
         if (!account) {
-            throw new ErrorResponse('Account Does Not Exist', 403);
+            throw new ErrorResponse('account Does Not Exist', 403);
         }
 
         // check password
