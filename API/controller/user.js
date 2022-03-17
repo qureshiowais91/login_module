@@ -1,50 +1,50 @@
-const user = require("../model/user");
+const { user } = require("../model/user");
 
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 
-exports.profiles = async (req, res, next) => {
+exports.accounts = async (req, res, next) => {
     try {
 
-        let profiles = await user.find(req.body);
+        let accounts = await user.find(req.body);
 
-        if (!profiles) {
+        if (!accounts) {
             throw new ErrorResponse(`Unable to Access Account info`, 403);
         }
 
         res.status(200).json({
             success: true,
-            data: profiles
+            data: accounts
         });
     } catch (error) {
         next(error)
     }
 }
-// update  user's  profile
-exports.profile = async (req, res, next) => {
+// update  user's  accoun
+exports.account = async (req, res, next) => {
     try {
+        console.log(req.user._id);
+        console.log(req.body);
 
-        let updatedUser = await user
-            .findOneAndUpdate({ _id: req.user._id }, { profile: req.body }, { new: true });
+        const userUpdated = await user.updateOne({ id: req.user._id }, { profile: req.body });
 
-        if (!updatedUser) {
-            throw new ErrorResponse('Unable to Update Profile', 500);
+        if (!userUpdated) {
+            throw new ErrorResponse("Unable to Update user", 500);
         }
 
-        updatedUser = await user.find({ _id: req.user._id });
-
-        if (!updatedUser) {
-            throw new ErrorResponse('Unable to Update Profile', 500);
-        }
+        const UpdatedUser = await user.findById(req.user._id);
         // console.log(`found user ${foundUser}`);
         // console.log(`updated user ${updatedUser}`);
         // console.log(`username ${username}`);
-        console.log(`token ${req.user}`);
+
+        if (!UpdatedUser) {
+            throw new ErrorResponse("Unable to Update user", 500);
+        }
         res
             .status(200)
             .json({
                 success: true,
-                user: updatedUser
+                data: UpdatedUser
             });
     } catch (error) {
         next(error);
