@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-const {user} = require('../model/user');
 const ErrorResponse = require('../utils/errorResponse');
+const doctor = require("../model/doctor");
+const patient = require("../model/patient");
 
 exports.protect = async (req, res, next) => {
     let token;
@@ -8,31 +9,45 @@ exports.protect = async (req, res, next) => {
     if (req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')
     ) {
-        // split Bearer token in to array and get index 1
         token = req.headers.authorization.split(' ')[1];
     }
-    // else if(req.cookies.token){
-    //     token=req.cookies.token;
-    // }
 
     try {
         if (!token) {
             throw new ErrorResponse(`Unauthorize Access`, 403);
         }
         let decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(decoded);
-        req.user = await user.findById(decoded.id);
-        next();
+        try {
+
+            const foundDoctor = await doctor.findById(decoded.id);
+            const foundPatient = await patient.findById(decoded.id);
+            console.log(foundPatient);
+            console.log(foundDoctor);
+            if (foundDoctor) {
+               
+                req.user = foundDoctor;
+                next();
+            } else {
+               
+                req.user = foundPatient;
+                next();
+            }
+
+            if (!req.user) {
+                throw new ErrorResponse("User Not Found", 500);
+            }
+        } catch (error) {
+            next(error);
+        }
     } catch (error) {
         next(error);
     }
-
 }
 
 exports.authorize = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return next(new ErrorResponse(`Unauthorize Access ${req.user.role}`, 500));
+            return next(new ErrorResponse(`Unauthorize Access Middleware ${req.user.role}`, 500));
         }
         else {
             next();

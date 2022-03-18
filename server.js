@@ -4,9 +4,11 @@ const dotenv = require("dotenv");
 const connectDB = require("./API/config/connectDB");
 const errorHandler = require("./API/middleware/error");
 
-//improt Router
+//register and login = auth
+const auth = require("./API/router/auth");
+const find = require("./API/router/find");
+const update = require("./API/router/update");
 
-const registerDoctor = require("./API/router/doctor/auth");
 
 // Cors and Assing PORT
 const cors = require("cors");
@@ -31,12 +33,16 @@ var corsOptions = {
 
 //Middleware
 app.use(express.json());
+
 // Router
-app.use("/doctor", cors(corsOptions), registerDoctor);
+app.use("/user/", cors(corsOptions), auth);
+app.use("/user/", cors(corsOptions), update);
+app.use("/user/", cors(corsOptions), find);
 
 
 //  Middleware
 app.use(errorHandler);
+
 app.listen(port, () => {
     console.log(`Server Connected ${port}`);
 });
