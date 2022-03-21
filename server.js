@@ -15,7 +15,7 @@ const cors = require("cors");
 const port = process.env.PORT || 3000;
 
 //Dotenv Config Path 
-dotenv.config({ path: "/home/owais/Project/login_0_1/login_module/API/config/.env" });
+dotenv.config({ path: "/home/owais/Project/login_module/API/config/.env" });
 
 //Connect Database 
 connectDB(process.env.MONGODB_URI);
