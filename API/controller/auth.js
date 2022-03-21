@@ -129,7 +129,7 @@ exports.logout = (req, res, next) => {
             .cookie("token", "", { maxAge: 100*100 })
             .json({
                 success:true,
-                msg:"logout"
+                token:"logout"
             })
     } catch (error) {
         next(error);
