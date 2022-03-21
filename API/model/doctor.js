@@ -31,10 +31,10 @@ const doctorSchema = mongoose.Schema({
     },
     address: {
         city:{
-            String
+           type:String
         },
         state:{
-            String
+            type:String
         }
     },
     speciality: {
