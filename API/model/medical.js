@@ -28,12 +28,12 @@ const medicalSchema = mongoose.Schema({
     },
     address: {
         city:{
-            String
+           type:String
         },
         state:{
-            String
+            type:String
         }
-    }
+    },
 });
 
 module.exports = mongoose.model("Medical", medicalSchema);

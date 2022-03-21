@@ -27,11 +27,11 @@ const laboratorySchema = mongoose.Schema({
         type: String,
     },
     address: {
-        city: {
-            String
+        city:{
+           type:String
         },
-        state: {
-            String
+        state:{
+            type:String
         }
     },
     opentime: {
