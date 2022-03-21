@@ -81,7 +81,11 @@ exports.findByCity = async (req, res, next) => {
         let userFound = false;
         switch (req.body.role) {
             case process.env.Doctor:
-                userFound = await doctor.find({ city: new RegExp('^' + escapeRegExp(req.body.city) + '$', "i") });
+                console.log(req.body);
+                userFound = await doctor.find({
+                    address:
+                        { city: req.body.address.city }
+                });
                 break;
             case process.env.Medical:
                 userFound = await medical.find({ city: new RegExp('^' + escapeRegExp(req.body.city) + '$', "i") });
@@ -118,16 +122,16 @@ exports.findBySpeciality = async (req, res, next) => {
         switch (req.body.role) {
             case process.env.Doctor:
                 console.log(req.body);
-                userFound = await doctor.find({speciality:req.body.speciality});
+                userFound = await doctor.find({ speciality: req.body.speciality });
                 break;
             case process.env.Medical:
-                userFound = await medical.find({speciality:req.body.speciality});
+                userFound = await medical.find({ speciality: req.body.speciality });
                 break;
             case process.env.Patient:
-                userFound = await patient.find({speciality:req.body.speciality});
+                userFound = await patient.find({ speciality: req.body.speciality });
                 break;
             case process.env.Laboratory:
-                userFound = await laboratory.find({speciality:req.body.speciality});
+                userFound = await laboratory.find({ speciality: req.body.speciality });
                 break;
             default:
                 throw new ErrorResponse("Invalid Role", 403)
