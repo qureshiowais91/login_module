@@ -33,7 +33,7 @@ exports.findByFullname = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            user: userFound[0]
+            user: userFound
         })
     } catch (error) {
         next(error);
@@ -68,7 +68,7 @@ exports.findByUsername = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            user: userFound[0]
+            user: userFound
         })
     } catch (error) {
         next(error);
@@ -102,10 +102,46 @@ exports.findByCity = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            user: userFound[0]
+            user: userFound
         })
     } catch (error) {
         next(error);
     }
 }
 
+
+
+exports.findBySpeciality = async (req, res, next) => {
+    try {
+
+        let userFound = false;
+        switch (req.body.role) {
+            case process.env.Doctor:
+                console.log(req.body);
+                userFound = await doctor.find({speciality:req.body.speciality});
+                break;
+            case process.env.Medical:
+                userFound = await medical.find({speciality:req.body.speciality});
+                break;
+            case process.env.Patient:
+                userFound = await patient.find({speciality:req.body.speciality});
+                break;
+            case process.env.Laboratory:
+                userFound = await laboratory.find({speciality:req.body.speciality});
+                break;
+            default:
+                throw new ErrorResponse("Invalid Role", 403)
+        }
+
+        if (!userFound) {
+            throw new ErrorResponse("User Not Found", 404);
+        }
+
+        res.status(200).json({
+            success: true,
+            user: userFound
+        })
+    } catch (error) {
+        next(error);
+    }
+}

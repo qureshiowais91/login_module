@@ -6,7 +6,8 @@ const { protect, authorize } = require("../middleware/auth");
 const {
     findByUsername,
     findByFullname,
-    findByCity
+    findByCity,
+    findBySpeciality
 } = require("../controller/find");
 
 //login/register handled in auth.js route 
@@ -24,6 +25,10 @@ router
     .route("/findBycity")
     .post(findByCity);
 
+
+router
+    .route("/findSpeciality")
+    .post(findBySpeciality);
 // find by username
 // find by addr city
 module.exports = router;
