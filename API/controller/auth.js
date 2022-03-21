@@ -122,4 +122,16 @@ exports.login = async (req, res, next) => {
     }
 }
 
-
+exports.logout = (req, res, next) => {
+    try {
+        res
+            .status(200)
+            .cookie("token", "", { maxAge: 1 })
+            .json({
+                success:true,
+                msg:"logout"
+            })
+    } catch (error) {
+        next(error);
+    }
+}
