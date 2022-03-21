@@ -30,9 +30,12 @@ const patientSchema = mongoose.Schema({
         type: Date
     },
     address: {
-        type: String,
-        MIN: [10],
-        MAX: [100]
+        city:{
+            String
+        },
+        state:{
+            String
+        }
     }
 });
 

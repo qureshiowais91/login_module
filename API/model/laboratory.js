@@ -13,7 +13,7 @@ const laboratorySchema = mongoose.Schema({
     },
     role: {
         type: String,
-        default:'laboratory'
+        default: 'laboratory'
     },
     fullname: {
         type: String,
@@ -27,9 +27,12 @@ const laboratorySchema = mongoose.Schema({
         type: String,
     },
     address: {
-        type: String,
-        MIN: [10],
-        MAX: [100]
+        city: {
+            String
+        },
+        state: {
+            String
+        }
     },
     opentime: {
         type: Date,
