@@ -16,18 +16,15 @@ const doctorSchema = mongoose.Schema({
         default: 'doctor'
     },
     fullname: {
-        type: String,
+        type: String,       
         MIN: [3],
         MAX: [100]
     },
     email: {
         type: String,
-
     },
     mobile: {
         type: String,
-        match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
-        //regex works for the formats (123) 456-7890 or 123-456-7890
     },
     birthdate: {
         type: Date

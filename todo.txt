@@ -1,11 +1,66 @@
-/api/auth/register
-    all info for register a user
-        return <access token>
+/doctor/register
+/doctor/login
+/doctor/update
+    proteted and auth
+/doctor/delete
+    proteted and auth
 
-/api/auth/login
-    login user
-        return <access token>
+/patient/register
+/patient/login
+/patient/update
+    proteted and auth
+/patient/delete
+    proteted and auth
 
+/lab/register
+/lab/login
+/lab/update
+    proteted and auth
+/lab/delete
+    proteted and auth
     
-/api/user/account
-    
+/medical/register
+/medical/login
+/medical/update
+    proteted and auth
+/medical/delete
+    proteted and auth
+
+Add relation in patient [of docs]
+
+// user/Search
+// POST
+//      Username
+// <return full profile>
+
+// POST
+//      Username
+// <return full pr
+// user/Search
+// POST 
+//      Role
+// <return full profile>
+
+// user/Search
+// POST 
+//      Role
+//      fees range
+// <return full profile>
+// user/Update
+// POST
+_________________________
+if mediene info is not post send 15 
+by pagination
+____________________________
+ medical:id/medicien
+ POST
+ name
+ companey
+ < return medicien >
+_____________________________
+_____________________________
+// user/add/appointment:id/order
+// :id/doctor
+
+
+// 

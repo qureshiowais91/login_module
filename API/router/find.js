@@ -11,6 +11,23 @@ const { findUser } = require("../controller/find");
 router
     .route("/find")
     .post(findUser);
-
-
+// find by username
+// find by addr city
+// 
 module.exports = router;
+
+
+// user/orders/
+// POST 
+    // by date
+
+// user/order/patient:id
+// POST
+    // 
+
+// user/medical:id/Order
+    // POST
+    // <return Full Order Details>
+
+
+    

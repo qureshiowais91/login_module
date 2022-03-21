@@ -9,9 +9,8 @@ const { escapeRegExp } = require("../utils/utilsFunction");
 // pass fullname of user and return object
 exports.findUser = async (req, res, next) => {
     try {
-
         let userFound = false;
-                switch (req.body.role) {
+        switch (req.body.role) {
             case process.env.Doctor:
                 userFound = await doctor.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
                 break;
@@ -42,7 +41,7 @@ exports.findUser = async (req, res, next) => {
 }
 
 
-// find by id
+// return all docotor based on 
 
 // exports.findUserbyID = () => {
 //     let userFound = false;
@@ -56,9 +55,9 @@ exports.findUser = async (req, res, next) => {
 //         case process.env.Patient:
 //             userFound = await patient.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
 //             break;
-//         // case process.env.Labs:
-//         //     userFound = await lab.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
-//         //     break;
+//         case process.env.Labs:
+//             userFound = await lab.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
+//             break;
 //         default:
 //             throw new ErrorResponse("Invalid User Role", 403)
 //     }

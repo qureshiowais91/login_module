@@ -36,9 +36,13 @@ const patientSchema = mongoose.Schema({
     }
 });
 
-
-
-
 module.exports = mongoose.model("Patient", patientSchema);
+
+
+// address:{
+//     addr1
+//     city
+//     state
+// }
 
 

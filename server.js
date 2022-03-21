@@ -39,7 +39,6 @@ app.use("/user/", cors(corsOptions), auth);
 app.use("/user/", cors(corsOptions), update);
 app.use("/user/", cors(corsOptions), find);
 
-
 //  Middleware
 app.use(errorHandler);
 

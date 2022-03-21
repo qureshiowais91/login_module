@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../utils/errorResponse');
+
 const doctor = require("../model/doctor");
 const patient = require("../model/patient");
+const medical = require('../model/medical');
+const laboratory = require('../model/laboratory');
 
 exports.protect = async (req, res, next) => {
     let token;
@@ -18,18 +21,26 @@ exports.protect = async (req, res, next) => {
         }
         let decoded = jwt.verify(token, process.env.JWT_SECRET);
         try {
-
+            
             const foundDoctor = await doctor.findById(decoded.id);
             const foundPatient = await patient.findById(decoded.id);
+            const foundmedical = await medical.findById(decoded.id);
+            const foundLab = await laboratory.findById(decoded.id);
+
             console.log(foundPatient);
             console.log(foundDoctor);
+
             if (foundDoctor) {
-               
                 req.user = foundDoctor;
                 next();
-            } else {
-               
+            } else if (foundPatient) {
                 req.user = foundPatient;
+                next();
+            } else if (foundmedical) {
+                req.user = foundmedical;
+                next();
+            } else if (foundLab) {
+                req.user = foundLab;
                 next();
             }
 

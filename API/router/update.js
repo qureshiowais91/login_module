@@ -8,6 +8,6 @@ const { protect, authorize } = require("../middleware/auth");
 // update
 router
     .route("/update")
-    .put(protect, authorize("doctor", "patient"), updateAccountDetls);
+    .put(protect, authorize("doctor", "patient", "medical", "laboratory"), updateAccountDetls);
 
 module.exports = router;

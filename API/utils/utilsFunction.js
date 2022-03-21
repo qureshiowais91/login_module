@@ -5,6 +5,7 @@ exports.createToken = (account) => {
         expiresIn: process.env.JWT_EXPIRE
     });
 }
+
 // check special char in input
 exports.escapeRegExp = (string) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, ' ');
