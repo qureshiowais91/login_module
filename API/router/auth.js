@@ -16,7 +16,7 @@ router
     .route("/login")
     .post(login);
 
-router.route("/logedin")
+router.route("/loggedin")
     .post(protect,loggedInUser);
 
 router

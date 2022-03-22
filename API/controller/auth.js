@@ -71,7 +71,7 @@ exports.login = async (req, res, next) => {
         const { username, password } = req.body;
         //find doctor 
         let account = false;
-        
+
         switch (req.body.role) {
             case process.env.Doctor:
                 account = await doctor.findOne({ username }).select('+password');
@@ -125,30 +125,46 @@ exports.login = async (req, res, next) => {
 
 exports.loggedInUser = async (req, res, next) => {
     try {
-        
-        const account = await user.find(req.user._id);
-
+        let userFound = false;
+        switch (req.body.role) {
+            case process.env.Doctor:
+                console.log(req.body);
+                userFound = await doctor.find(req.user._id);
+                break;
+            case process.env.Medical:
+                userFound = await medical.find(req.user._id);
+                break;
+            case process.env.Patient:
+                userFound = await patient.find(req.user._id);
+                break;
+            case process.env.Laboratory:
+                userFound = await laboratory.find(req.user._id);
+                break;
+            default:
+                throw new ErrorResponse("Invalid Role", 403)
+        }
         if (!userFound) {
             throw new ErrorResponse("User Not Found", 404);
         }
 
         res.status(200).json({
             success: true,
-            account,
+            account: userFound
         })
     } catch (error) {
         next(error);
     }
 }
 
+
 exports.logout = (req, res, next) => {
     try {
         res
             .status(200)
-            .cookie("token", "", { maxAge: 100*100 })
+            .cookie("token", "", { maxAge: 100 * 100 })
             .json({
-                success:true,
-                token:"logout"
+                success: true,
+                token: "logout"
             })
     } catch (error) {
         next(error);
