@@ -23,7 +23,7 @@ connectDB(process.env.MONGODB_URI);
 const app = express();
 
 // specify the allowed domains and set corsOptions to check them
-var whitelist = ['http://localhost:5500', 'http://127.0.0.1:5500'];
+var whitelist = ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:3000'];
 var corsOptions = {
     origin: function (origin, callback) {
         var originWhitelisted = whitelist.indexOf(origin) !== -1;
