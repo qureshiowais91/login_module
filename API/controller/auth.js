@@ -71,7 +71,7 @@ exports.login = async (req, res, next) => {
         const { username, password } = req.body;
         //find doctor 
         let account = false;
-
+        
         switch (req.body.role) {
             case process.env.Doctor:
                 account = await doctor.findOne({ username }).select('+password');
@@ -115,8 +115,27 @@ exports.login = async (req, res, next) => {
             .cookie('token', token, option)
             .json({
                 success: true,
-                token
+                token,
+                account
             })
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.loggedInUser = async (req, res, next) => {
+    try {
+        
+        const account = await user.find(req.user._id);
+
+        if (!userFound) {
+            throw new ErrorResponse("User Not Found", 404);
+        }
+
+        res.status(200).json({
+            success: true,
+            account,
+        })
     } catch (error) {
         next(error);
     }

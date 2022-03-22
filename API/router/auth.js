@@ -3,8 +3,10 @@ const router = express.Router();
 const {
     register,
     login,
-    logout
+    logout,
+    loggedInUser
 } = require("../controller/auth");
+const { protect } = require("../middleware/auth");
 // auth
 router
     .route("/register")
@@ -13,6 +15,9 @@ router
 router
     .route("/login")
     .post(login);
+
+router.route("/logedin")
+    .post(protect,loggedInUser);
 
 router
     .route("/logout")
