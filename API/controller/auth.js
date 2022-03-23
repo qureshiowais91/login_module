@@ -126,19 +126,20 @@ exports.login = async (req, res, next) => {
 exports.loggedInUser = async (req, res, next) => {
     try {
         let userFound = false;
+        console.log(req.body._id);
         switch (req.body.role) {
             case process.env.Doctor:
                 console.log(req.body);
-                userFound = await doctor.find(req.user._id);
+                userFound = await doctor.find({_id:req.user._id});
                 break;
             case process.env.Medical:
-                userFound = await medical.find(req.user._id);
+                userFound = await medical.find({_id:req.user._id});
                 break;
             case process.env.Patient:
-                userFound = await patient.find(req.user._id);
+                userFound = await patient.find({_id:req.user._id});
                 break;
             case process.env.Laboratory:
-                userFound = await laboratory.find(req.user._id);
+                userFound = await laboratory.find({_id:req.user._id});
                 break;
             default:
                 throw new ErrorResponse("Invalid Role", 403)
