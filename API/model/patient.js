@@ -30,22 +30,28 @@ const patientSchema = mongoose.Schema({
         type: Date
     },
     address: {
-        city:{
-           type:String
+        city: {
+            type: String
         },
-        state:{
-            type:String
+        state: {
+            type: String
         }
     },
 });
+// , {
+//     toJSON: { virtuals: true },
+//     toObject: { virtuals: true }
+// }
+
+
+// patientSchema.virtual('carts', {
+//     ref: 'Cart',
+//     localField: '_id',
+//     foreignField: 'carts',
+//     justOne: true
+// });
 
 module.exports = mongoose.model("Patient", patientSchema);
 
 
-// address:{
-//     addr1
-//     city
-//     state
-// }
-
-
+// in patient populate cart 

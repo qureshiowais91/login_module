@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const doctorSchema = mongoose.Schema({
+const pharmacySchema = mongoose.Schema({
     username: {
         type: String,
         unique: true
@@ -13,10 +13,10 @@ const doctorSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'doctor'
+        default: "medical"
     },
     fullname: {
-        type: String,       
+        type: String,
         MIN: [3],
         MAX: [100]
     },
@@ -26,29 +26,16 @@ const doctorSchema = mongoose.Schema({
     mobile: {
         type: String,
     },
-    birthdate: {
-        type: Date
-    },
     address: {
-        city:{
-           type:String
+        city: {
+            type: String
         },
-        state:{
-            type:String
+        state: {
+            type: String
         }
     },
-    speciality: {
-        type: String,
-    },
-    fees: {
-        type: Number,
-    },
-    opentime: {
-        type: Date,
-    },
-    closetime: {
-        type: Date
-    }
 });
 
-module.exports = mongoose.model("Doctor", doctorSchema);
+module.exports = mongoose.model("Pharmacy", pharmacySchema);
+
+

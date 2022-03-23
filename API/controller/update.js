@@ -1,7 +1,7 @@
 // const { create } = require("../model/doctors/doctor");
 const doctor = require("../model/doctor");
 const patient = require("../model/patient");
-const medical = require("../model/medical");
+const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
@@ -15,8 +15,8 @@ exports.updateAccountDetls = async (req, res, next) => {
             case process.env.Doctor:
                 accountUpdateStatus = await doctor.findByIdAndUpdate({ _id: req.user._id }, req.body, { new: true });
                 break;
-            case process.env.Medical:
-                accountUpdateStatus = await medical.findByIdAndUpdate({ _id: req.user._id }, req.body, { new: true });
+            case process.env.Pharmacy:
+                accountUpdateStatus = await pharmacy.findByIdAndUpdate({ _id: req.user._id }, req.body, { new: true });
                 break;
             case process.env.Patient:
                 accountUpdateStatus = await patient.findByIdAndUpdate({ _id: req.user._id }, req.body, { new: true });
@@ -38,6 +38,26 @@ exports.updateAccountDetls = async (req, res, next) => {
             .json({
                 succes: true,
                 data: accountUpdateStatus
+            });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.updateDrug = async (req, res, next) => {
+    try {
+        const updatedDrug = await drug
+            .find({ addedby: req.body._id });
+
+        if (!updatedDrug) {
+            throw new ErrorResponse("Drug Details Faild to Update , Function : updateDrug line 52", 500);
+        }
+        res
+            .status(201)
+            .json({
+                succes: true,
+                updatedDrug
             });
 
     } catch (error) {
