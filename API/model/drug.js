@@ -15,6 +15,9 @@ const drugSchema = mongoose.Schema({
     price: {
         type: Number
     },
+    quantity: {
+        type: Number
+    },
     power: {
         type: String
     },

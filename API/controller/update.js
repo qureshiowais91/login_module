@@ -3,6 +3,8 @@ const doctor = require("../model/doctor");
 const patient = require("../model/patient");
 const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
+const drug = require("../model/drug");
+
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -44,11 +46,10 @@ exports.updateAccountDetls = async (req, res, next) => {
         next(error);
     }
 }
-
+// name
 exports.updateDrug = async (req, res, next) => {
     try {
-        const updatedDrug = await drug
-            .find({ addedby: req.body._id });
+        const updatedDrug = await drug.findByIdAndUpdate({ _id: req.body._id }, req.body, { new: true });
 
         if (!updatedDrug) {
             throw new ErrorResponse("Drug Details Faild to Update , Function : updateDrug line 52", 500);
@@ -64,3 +65,4 @@ exports.updateDrug = async (req, res, next) => {
         next(error);
     }
 }
+// deletebyid

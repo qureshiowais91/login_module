@@ -42,7 +42,7 @@ exports.register = async (req, res, next) => {
 
         // create signed token
         // imported from utils
-        const token = createToken(account,req.body.role);
+        const token = createToken(account, req.body.role);
 
         if (!token) {
             throw new ErrorResponse(`Can't Get Account Token`, 302);
@@ -155,7 +155,6 @@ exports.loggedInUser = async (req, res, next) => {
         next(error);
     }
 }
-
 
 exports.logout = (req, res, next) => {
     try {
