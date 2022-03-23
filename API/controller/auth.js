@@ -2,14 +2,13 @@
 const bcrypt = require("bcryptjs");
 const doctor = require("../model/doctor");
 const patient = require("../model/patient");
-const medical = require("../model/medical");
+const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 const { createToken } = require("../utils/utilsFunction");
 
 // Register doctor
-
 exports.register = async (req, res, next) => {
 
     try {
@@ -24,8 +23,8 @@ exports.register = async (req, res, next) => {
             case process.env.Doctor:
                 account = await doctor.create(req.body);
                 break;
-            case process.env.Medical:
-                account = await medical.create(req.body);
+            case process.env.Pharmacy:
+                account = await pharmacy.create(req.body);
                 break;
             case process.env.Patient:
                 account = await patient.create(req.body);
@@ -43,7 +42,7 @@ exports.register = async (req, res, next) => {
 
         // create signed token
         // imported from utils
-        const token = createToken(account);
+        const token = createToken(account,req.body.role);
 
         if (!token) {
             throw new ErrorResponse(`Can't Get Account Token`, 302);
@@ -79,8 +78,8 @@ exports.login = async (req, res, next) => {
             case process.env.Patient:
                 account = await patient.findOne({ username }).select('+password');
                 break;
-            case process.env.Medical:
-                account = await medical.findOne({ username }).select('+password');
+            case process.env.Pharmacy:
+                account = await pharmacy.findOne({ username }).select('+password');
                 break;
             case process.env.Laboratory:
                 account = await laboratory.findOne({ username }).select('+password');
@@ -130,16 +129,16 @@ exports.loggedInUser = async (req, res, next) => {
         switch (req.body.role) {
             case process.env.Doctor:
                 console.log(req.body);
-                userFound = await doctor.find({_id:req.user._id});
+                userFound = await doctor.find({ _id: req.user._id });
                 break;
-            case process.env.Medical:
-                userFound = await medical.find({_id:req.user._id});
+            case process.env.Pharmacy:
+                userFound = await pharmacy.find({ _id: req.user._id });
                 break;
             case process.env.Patient:
-                userFound = await patient.find({_id:req.user._id});
+                userFound = await patient.find({ _id: req.user._id });
                 break;
             case process.env.Laboratory:
-                userFound = await laboratory.find({_id:req.user._id});
+                userFound = await laboratory.find({ _id: req.user._id });
                 break;
             default:
                 throw new ErrorResponse("Invalid Role", 403)
@@ -162,7 +161,7 @@ exports.logout = (req, res, next) => {
     try {
         res
             .status(200)
-            .cookie("token", "", { maxAge: 100 * 100 })
+            .cookie("token", "logout", { maxAge: 100 * 100 })
             .json({
                 success: true,
                 token: "logout"

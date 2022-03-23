@@ -3,7 +3,7 @@ const ErrorResponse = require('../utils/errorResponse');
 
 const doctor = require("../model/doctor");
 const patient = require("../model/patient");
-const medical = require('../model/medical');
+const pharmacy = require('../model/pharmacy');
 const laboratory = require('../model/laboratory');
 
 exports.protect = async (req, res, next) => {
@@ -24,11 +24,8 @@ exports.protect = async (req, res, next) => {
             
             const foundDoctor = await doctor.findById(decoded.id);
             const foundPatient = await patient.findById(decoded.id);
-            const foundmedical = await medical.findById(decoded.id);
+            const foundPharmacy = await pharmacy.findById(decoded.id);
             const foundLab = await laboratory.findById(decoded.id);
-
-            console.log(foundPatient);
-            console.log(foundDoctor);
 
             if (foundDoctor) {
                 req.user = foundDoctor;
@@ -36,8 +33,8 @@ exports.protect = async (req, res, next) => {
             } else if (foundPatient) {
                 req.user = foundPatient;
                 next();
-            } else if (foundmedical) {
-                req.user = foundmedical;
+            } else if (foundPharmacy) {
+                req.user = foundPharmacy;
                 next();
             } else if (foundLab) {
                 req.user = foundLab;
