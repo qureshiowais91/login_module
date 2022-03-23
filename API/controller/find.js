@@ -1,7 +1,10 @@
 const doctor = require("../model/doctor");
 const patient = require("../model/patient");
-const medical = require("../model/medical");
+const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
+const drug  =require("../model/drug");
+const cart = require("../model/cart");
+
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 const { escapeRegExp } = require("../utils/utilsFunction");
@@ -14,8 +17,8 @@ exports.findByFullname = async (req, res, next) => {
             case process.env.Doctor:
                 userFound = await doctor.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
                 break;
-            case process.env.Medical:
-                userFound = await medical.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
+            case process.env.Pharmacy:
+                userFound = await pharmacy.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
                 break;
             case process.env.Patient:
                 userFound = await patient.find({ fullname: new RegExp('^' + escapeRegExp(req.body.fullname) + '$', "i") });
@@ -40,8 +43,6 @@ exports.findByFullname = async (req, res, next) => {
     }
 }
 
-
-
 exports.findByUsername = async (req, res, next) => {
     try {
         let userFound = false;
@@ -49,8 +50,8 @@ exports.findByUsername = async (req, res, next) => {
             case process.env.Doctor:
                 userFound = await doctor.find({ username: new RegExp('^' + escapeRegExp(req.body.username) + '$', "i") });
                 break;
-            case process.env.Medical:
-                userFound = await medical.find({ username: new RegExp('^' + escapeRegExp(req.body.username) + '$', "i") });
+            case process.env.Pharmacy:
+                userFound = await pharmacy.find({ username: new RegExp('^' + escapeRegExp(req.body.username) + '$', "i") });
                 break;
             case process.env.Patient:
                 userFound = await patient.find({ username: new RegExp('^' + escapeRegExp(req.body.username) + '$', "i") });
@@ -87,8 +88,8 @@ exports.findByCity = async (req, res, next) => {
                         { city: req.body.address.city }
                 });
                 break;
-            case process.env.Medical:
-                userFound = await medical.find({ city: new RegExp('^' + escapeRegExp(req.body.city) + '$', "i") });
+            case process.env.Pharmacy:
+                userFound = await pharmacy.find({ city: new RegExp('^' + escapeRegExp(req.body.city) + '$', "i") });
                 break;
             case process.env.Patient:
                 userFound = await patient.find({ city: new RegExp('^' + escapeRegExp(req.body.city) + '$', "i") });
@@ -113,8 +114,6 @@ exports.findByCity = async (req, res, next) => {
     }
 }
 
-
-
 exports.findBySpeciality = async (req, res, next) => {
     try {
 
@@ -124,8 +123,8 @@ exports.findBySpeciality = async (req, res, next) => {
                 console.log(req.body);
                 userFound = await doctor.find({ speciality: req.body.speciality });
                 break;
-            case process.env.Medical:
-                userFound = await medical.find({ speciality: req.body.speciality });
+            case process.env.Pharmacy:
+                userFound = await pharmacy.find({ speciality: req.body.speciality });
                 break;
             case process.env.Patient:
                 userFound = await patient.find({ speciality: req.body.speciality });
@@ -145,6 +144,31 @@ exports.findBySpeciality = async (req, res, next) => {
             success: true,
             user: userFound
         })
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.findDrug = async (req, res, next) => {
+
+    try {
+        const drugFound = await drug.find({
+            addedBy: req.user._id,
+            drugName: req.body.drugName
+        });
+
+        console.log(req.body.drugName);
+
+        if (!drugFound) {
+            throw new ErrorResponse("Drug not found");
+        }
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                drugFound
+            });
     } catch (error) {
         next(error);
     }

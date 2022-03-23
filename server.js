@@ -8,8 +8,8 @@ const errorHandler = require("./API/middleware/error");
 const auth = require("./API/router/auth");
 const find = require("./API/router/find");
 const update = require("./API/router/update");
-
-
+// const cart = require("./API/router/cart");
+const drug = require("./API/router/drug");
 // Cors and Assing PORT
 const cors = require("cors");
 const port = process.env.PORT || 3000;
@@ -23,7 +23,7 @@ connectDB(process.env.MONGODB_URI);
 const app = express();
 
 // specify the allowed domains and set corsOptions to check them
-var whitelist = ['http://localhost:5500', 'http://127.0.0.1:5500','http://127.0.0.1:3000','http://localhost:3000'];
+var whitelist = ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:3000', 'http://localhost:3000'];
 var corsOptions = {
     origin: function (origin, callback) {
         var originWhitelisted = whitelist.indexOf(origin) !== -1;
@@ -34,10 +34,16 @@ var corsOptions = {
 //Middleware
 app.use(express.json());
 
-// Router
-app.use("/user/", cors(corsOptions), auth);
-app.use("/user/", cors(corsOptions), update);
-app.use("/user/", cors(corsOptions), find);
+// Router User
+app.use("/user", cors(corsOptions), auth);
+app.use("/user", cors(corsOptions), update);
+app.use("/user", cors(corsOptions), find);
+
+// Router pharmacy
+app.use("/drug", cors(corsOptions),drug);
+
+//Router Cart
+// app.use("/cart", cors(corsOptions), cart);
 
 //  Middleware
 app.use(errorHandler);
