@@ -174,7 +174,7 @@ exports.findTest = async (req, res, next) => {
         let queryString = JSON.stringify(req.query);
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-        const testFound = await test.find(queryString);
+        const testFound = await test.find(JSON.parse(queryString));
 
         if (!testFound) {
             throw new ErrorResponse("Drug not found");
