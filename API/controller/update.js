@@ -4,9 +4,10 @@ const patient = require("../model/patient");
 const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
 const drug = require("../model/drug");
-
+const test = require("../model/test");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
+
 
 // update account details based on roles
 exports.updateAccountDetls = async (req, res, next) => {
@@ -46,7 +47,6 @@ exports.updateAccountDetls = async (req, res, next) => {
         next(error);
     }
 }
-// name
 exports.updateDrug = async (req, res, next) => {
     try {
         const updatedDrug = await drug.findByIdAndUpdate({ _id: req.body._id }, req.body, { new: true });
@@ -65,4 +65,23 @@ exports.updateDrug = async (req, res, next) => {
         next(error);
     }
 }
-// deletebyid
+
+exports.updateTest = async (req, res, next) => {
+    try {
+
+        const updatedTest = await test.findByIdAndUpdate({ _id: req.body._id }, req.body, { new: true });
+
+        if (!updatedTest) {
+            throw new ErrorResponse("Test Details Faild to Update", 400);
+        }
+        res
+            .status(201)
+            .json({
+                succes: true,
+                updatedDrug
+            });
+
+    } catch (error) {
+        next(error);
+    }
+}

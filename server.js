@@ -10,6 +10,8 @@ const find = require("./API/router/find");
 const update = require("./API/router/update");
 // const cart = require("./API/router/cart");
 const drug = require("./API/router/drug");
+const test = require("./API/router/test");
+
 // Cors and Assing PORT
 const cors = require("cors");
 const port = process.env.PORT || 3000;
@@ -40,7 +42,8 @@ app.use("/user", cors(corsOptions), update);
 app.use("/user", cors(corsOptions), find);
 
 // Router pharmacy
-app.use("/drug", cors(corsOptions),drug);
+app.use("/drug", cors(corsOptions), drug);
+app.use("/test", cors(corsOptions), test);
 
 //Router Cart
 // app.use("/cart", cors(corsOptions), cart);

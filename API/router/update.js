@@ -3,6 +3,7 @@ const router = express.Router();
 const { updateAccountDetls } = require("../controller/update");
 const { protect, authorize } = require("../middleware/auth");
 
+
 //login/register handled in auth.js route 
 
 // update

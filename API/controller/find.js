@@ -2,12 +2,14 @@ const doctor = require("../model/doctor");
 const patient = require("../model/patient");
 const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
-const drug  =require("../model/drug");
+const drug = require("../model/drug");
+const test = require("../model/test");
 const cart = require("../model/cart");
 
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 const { escapeRegExp } = require("../utils/utilsFunction");
+
 
 // pass fullname of user and return object
 exports.findByFullname = async (req, res, next) => {
@@ -75,7 +77,6 @@ exports.findByUsername = async (req, res, next) => {
         next(error);
     }
 }
-
 
 exports.findByCity = async (req, res, next) => {
     try {
@@ -150,16 +151,32 @@ exports.findBySpeciality = async (req, res, next) => {
 }
 
 exports.findDrug = async (req, res, next) => {
-
     try {
-        const drugFound = await drug.find({
-            addedBy: req.user._id,
-            drugName: req.body.drugName
-        });
+        let queryString = JSON.stringify(req.query);
+        queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-        console.log(req.body.drugName);
+        const foundDrug = await drug.find(JSON.parse(queryString));
 
-        if (!drugFound) {
+        res
+            .status(200)
+            .json({
+                success: true,
+                drug: foundDrug
+            });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.findTest = async (req, res, next) => {
+    try {
+        let queryString = JSON.stringify(req.query);
+        queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+        const testFound = await test.find(queryString);
+
+        if (!testFound) {
             throw new ErrorResponse("Drug not found");
         }
 
@@ -167,9 +184,11 @@ exports.findDrug = async (req, res, next) => {
             .status(200)
             .json({
                 success: true,
-                drugFound
+                testFound
             });
+
     } catch (error) {
         next(error);
     }
 }
+

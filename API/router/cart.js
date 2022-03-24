@@ -1,12 +1,21 @@
 // const express = require("express");
 // const router = express.Router();
 
-// const { addInfo, Getall, userCart } = require("../controller/cart");
-// const { protect } = require("../middleware/auth");
+// const { insertCart } = require("../controller/insert");
 
-// router.route("/add").post(addInfo);
-// router.route("/list").get(Getall);
-// router.route("/info").post(protect, userCart);
 
-// module.exports = router
+// router
+//     .route("/insert")
+//     .post(insertCart);
+
+// router
+//     .route("/findCart")
+//     .post(findCart);
+
+// router
+//     .route("/update")
+//     .post(updateCart);
+
+
+module.exports = router
 
