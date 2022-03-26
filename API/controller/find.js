@@ -4,11 +4,12 @@ const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
 const drug = require("../model/drug");
 const test = require("../model/test");
-const cart = require("../model/cart");
+const appoinmentOrder = require("../model/appoinmentOrder");
 
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 const { escapeRegExp } = require("../utils/utilsFunction");
+const { status } = require("express/lib/response");
 
 
 // pass fullname of user and return object
@@ -173,7 +174,7 @@ exports.findTest = async (req, res, next) => {
     try {
         let queryString = JSON.stringify(req.query);
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-
+        console.log(Date(queryString.time));
         const testFound = await test.find(JSON.parse(queryString));
 
         if (!testFound) {
@@ -191,4 +192,42 @@ exports.findTest = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.appoinmentOrder = async (req, res, next) => {
+    try {
+        let queryString = JSON.stringify(req.query);
+
+        queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+        console.log(JSON.parse(queryString))
+        const orderDtls = await appoinmentOrder.find(JSON.parse(queryString));
+
+        if (!cartsDtls) {
+            throw new ErrorResponse("Orders not found", 404);
+        }
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                orderDtls
+            })
+    } catch (error) {
+        next(error)
+    }
+}
+
+exports.listOrders = async (req, res, next) => {
+    try {
+        const orderList = await appoinmentOrder.find(req.body);
+
+        res.status(200).json({
+            success: true,
+            data: orderList
+        })
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 

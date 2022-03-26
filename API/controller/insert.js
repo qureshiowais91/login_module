@@ -1,4 +1,4 @@
-const cart = require("../model/cart");
+const order = require("../model/appoinmentOrder");
 const drug = require("../model/drug");
 const test = require("../model/test");
 
@@ -9,7 +9,7 @@ exports.insertDrug = async (req, res, next) => {
         const addedBy = req.body.addedBy;
 
         if (!addedBy) {
-            throw new ErrorResponse("addedby id missing", 403);
+            throw new ErrorResponse("addedBy id missing", 403);
         }
 
         const {
@@ -73,44 +73,23 @@ exports.insertTest = async (req, res, next) => {
     }
 }
 
-
-exports.insertCart = async (req, res, next) => {
+exports.insertAppoinment = async (req, res, next) => {
     try {
+        const newAppoinment = await order.create(req.body);
 
-        const cartOf = req.body.addedBy;
-
-        const {
-            appoinment: {
-                appoinmentWith,
-                fees,
-                time
-            },
-            drug,
-            test
-        } = req.body;
-
-        const CartInfo = await cart.find({ cartOf });
-
-        CartInfo.update({
-            appoinment: {
-                appoinmentWith,
-                fees,
-                time
-            },
-            drug,
-            test
-        });
-
-        CartInfo.save();
+        if (!newAppoinment) {
+            throw new ErrorResponse("Appoinment Not Created", 400);
+        }
 
         res
             .status(200)
             .json({
                 success: true,
-                cart: CartInfo
+                appoinment: newAppoinment,
+                patientID: req.body.cartOf
             });
-
     } catch (error) {
         next(error);
     }
 }
+

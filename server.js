@@ -8,7 +8,7 @@ const errorHandler = require("./API/middleware/error");
 const auth = require("./API/router/auth");
 const find = require("./API/router/find");
 const update = require("./API/router/update");
-// const cart = require("./API/router/cart");
+const order = require("./API/router/order");
 const drug = require("./API/router/drug");
 const test = require("./API/router/test");
 
@@ -33,7 +33,7 @@ var corsOptions = {
     }
 };
 
-//Middleware
+// Middleware
 app.use(express.json());
 
 // Router User
@@ -45,10 +45,10 @@ app.use("/user", cors(corsOptions), find);
 app.use("/drug", cors(corsOptions), drug);
 app.use("/test", cors(corsOptions), test);
 
-//Router Cart
-// app.use("/cart", cors(corsOptions), cart);
+// Router Order
+app.use("/order", cors(corsOptions), order);
 
-//  Middleware
+// Middleware
 app.use(errorHandler);
 
 app.listen(port, () => {
