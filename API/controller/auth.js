@@ -83,6 +83,7 @@ exports.login = async (req, res, next) => {
                 break;
             case process.env.Laboratory:
                 account = await laboratory.findOne({ username }).select('+password');
+                break;
             default:
                 throw new ErrorResponse("Invalid Role", 403);
         }
