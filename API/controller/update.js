@@ -89,7 +89,7 @@ exports.updateTest = async (req, res, next) => {
 exports.completedAppoinment = async (req, res, next) => {
     try {
         const completedAppoinmentdtls = await appoinmentOrder
-            .findByIdAndUpdate(
+            .findOneAndUpdate(
                 { orderBy: req.body.orderBy },
                 { completed: req.body.completedAppoinment },
                 { new: true });
