@@ -91,7 +91,7 @@ exports.completedAppoinment = async (req, res, next) => {
         const completedAppoinmentdtls = await appoinmentOrder
             .findByIdAndUpdate(
                 { orderBy: req.body.orderBy },
-                { completedAppoinment: req.body.completedAppoinment },
+                { completed: req.body.completedAppoinment },
                 { new: true });
 
         if (!completedAppoinmentdtls) {
