@@ -75,7 +75,24 @@ exports.insertTest = async (req, res, next) => {
 
 exports.insertAppoinment = async (req, res, next) => {
     try {
-        const newAppoinment = await order.create(req.body);
+
+        const {
+            orderBy,
+            appoinmentWith,
+            fees,
+            time,
+            completed
+        } = req.body
+
+
+
+        const newAppoinment = await order.create({
+            orderBy,
+            appoinmentWith,
+            fees,
+            time,
+            completed
+        });
 
         if (!newAppoinment) {
             throw new ErrorResponse("Appoinment Not Created", 400);
@@ -85,8 +102,7 @@ exports.insertAppoinment = async (req, res, next) => {
             .status(200)
             .json({
                 success: true,
-                appoinment: newAppoinment,
-                patientID: req.body.cartOf
+                appoinment: newAppoinment
             });
     } catch (error) {
         next(error);

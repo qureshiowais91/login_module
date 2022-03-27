@@ -4,7 +4,7 @@ const appoinmentOrderSchema = mongoose.Schema({
     orderBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Patient",
-        require: true,
+        require: true
     },
     appoinmentWith: {
         type: mongoose.Schema.Types.ObjectId,
@@ -18,19 +18,17 @@ const appoinmentOrderSchema = mongoose.Schema({
         type: Date
     },
     completed: {
-        type: Boolean
+        type: String
     },
     drug: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Drug",
         require: true,
-        unique: true
     }],
-    test: [{
+    test: [{ 
         type: mongoose.Schema.Types.ObjectId,
         ref: "Test",
         require: true,
-
     }]
 });
 

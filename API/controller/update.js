@@ -91,7 +91,7 @@ exports.completedAppoinment = async (req, res, next) => {
         const completedAppoinmentdtls = await appoinmentOrder
             .findOneAndUpdate(
                 { orderBy: req.body.orderBy },
-                { completed: req.body.completedAppoinment },
+                 req.body.completedAppoinment,
                 { new: true });
 
         if (!completedAppoinmentdtls) {
@@ -108,7 +108,6 @@ exports.completedAppoinment = async (req, res, next) => {
         next(error);
     }
 }
-
 
 
 exports.testDrugOrder = async (req, res, next) => {
