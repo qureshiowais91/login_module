@@ -29,14 +29,10 @@ const patientSchema = mongoose.Schema({
     birthdate: {
         type: Date
     },
-    address: {
-        city: {
-            type: String
-        },
-        state: {
-            type: String
-        }
-    },
+    city: {
+        type: String
+    }
+
 });
 // , {
 //     toJSON: { virtuals: true },

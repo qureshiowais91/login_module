@@ -6,6 +6,10 @@ const {
     logout,
     loggedInUser
 } = require("../controller/auth");
+
+
+const { deleteUser } = require("../controller/delete");
+
 const { protect } = require("../middleware/auth");
 // auth
 router
@@ -17,10 +21,14 @@ router
     .post(login);
 
 router.route("/loggedin")
-    .post(protect,loggedInUser);
+    .post(protect, loggedInUser);
 
 router
     .route("/logout")
     .get(logout);
+
+router
+    .route("/delete")
+    .post(deleteUser);
 
 module.exports = router;

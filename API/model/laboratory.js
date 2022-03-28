@@ -26,13 +26,8 @@ const laboratorySchema = mongoose.Schema({
     mobile: {
         type: String,
     },
-    address: {
-        city:{
-           type:String
-        },
-        state:{
-            type:String
-        }
+    city: {
+        type: String
     },
     opentime: {
         type: Date,

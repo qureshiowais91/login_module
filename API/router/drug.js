@@ -4,7 +4,7 @@ const router = express.Router();
 const { insertDrug } = require("../controller/insert");
 const { findDrug, findDrugByPrice } = require("../controller/find");
 const { updateDrug } = require("../controller/update");
-const { deleteDrug } = require("../controller/delete.js");
+const { deleteDrug } = require("../controller/delete");
 
 router
     .route("/findDrug")
@@ -18,9 +18,9 @@ router
     .route("/update")
     .post(updateDrug);
 
-// router
-//     .route("/deleteByName")
-//     .post(protect, deleteDrug);
+router
+    .route("/deleteByName")
+    .post(deleteDrug);
 
 
 module.exports = router

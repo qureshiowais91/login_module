@@ -26,14 +26,9 @@ const pharmacySchema = mongoose.Schema({
     mobile: {
         type: String,
     },
-    address: {
-        city: {
-            type: String
-        },
-        state: {
-            type: String
-        }
-    },
+    city: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model("Pharmacy", pharmacySchema);

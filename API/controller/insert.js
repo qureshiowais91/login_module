@@ -84,8 +84,6 @@ exports.insertAppoinment = async (req, res, next) => {
             completed
         } = req.body
 
-
-
         const newAppoinment = await order.create({
             orderBy,
             appoinmentWith,

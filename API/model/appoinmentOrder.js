@@ -20,12 +20,22 @@ const appoinmentOrderSchema = mongoose.Schema({
     completed: {
         type: String
     },
+    pharmacy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Pharmacy",
+        require: true
+    },
     drug: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Drug",
         require: true,
     }],
-    test: [{ 
+    laboratory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Laboratory",
+        require: true
+    },
+    test: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Test",
         require: true,

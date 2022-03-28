@@ -16,7 +16,7 @@ const doctorSchema = mongoose.Schema({
         default: 'doctor'
     },
     fullname: {
-        type: String,       
+        type: String,
         MIN: [3],
         MAX: [100]
     },
@@ -29,13 +29,8 @@ const doctorSchema = mongoose.Schema({
     birthdate: {
         type: Date
     },
-    address: {
-        city:{
-           type:String
-        },
-        state:{
-            type:String
-        }
+    city: {
+        type: String
     },
     speciality: {
         type: String,

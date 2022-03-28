@@ -9,7 +9,6 @@ const appoinmentOrder = require("../model/appoinmentOrder");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 const { escapeRegExp } = require("../utils/utilsFunction");
-const { status } = require("express/lib/response");
 
 
 // pass fullname of user and return object
@@ -117,8 +116,8 @@ exports.findByCity = async (req, res, next) => {
 }
 
 exports.findBySpeciality = async (req, res, next) => {
-    try {
 
+    try {
         let userFound = false;
         switch (req.body.role) {
             case process.env.Doctor:
@@ -193,7 +192,7 @@ exports.findTest = async (req, res, next) => {
     }
 }
 
-exports.appoinmentOrder = async (req, res, next) => {
+exports.findOrder = async (req, res, next) => {
     try {
         let queryString = JSON.stringify(req.query);
 
@@ -201,7 +200,7 @@ exports.appoinmentOrder = async (req, res, next) => {
         console.log(JSON.parse(queryString))
         const orderDtls = await appoinmentOrder.find(JSON.parse(queryString));
 
-        if (!cartsDtls) {
+        if (!orderDtls) {
             throw new ErrorResponse("Orders not found", 404);
         }
 
