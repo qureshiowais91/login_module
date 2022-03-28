@@ -7,7 +7,7 @@ const drug = require("../model/drug");
 const test = require("../model/test");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
-const appoinmentOrder = require("../model/appoinmentOrder");
+const appoinmentOrder = require("../model/order");
 
 // update account details based on roles
 exports.updateAccountDetls = async (req, res, next) => {
@@ -47,12 +47,16 @@ exports.updateAccountDetls = async (req, res, next) => {
         next(error);
     }
 }
+
 exports.updateDrug = async (req, res, next) => {
     try {
-        const updatedDrug = await drug.findByIdAndUpdate({ _id: req.body._id }, req.body, { new: true });
+        const updatedDrug = await drug.findByIdAndUpdate(
+            { _id: req.body._id },
+            req.body,
+            { new: true });
 
         if (!updatedDrug) {
-            throw new ErrorResponse("Drug Details Faild to Update , Function : updateDrug line 52", 500);
+            throw new ErrorResponse("Drug Details Faild to Update", 500);
         }
         res
             .status(201)
@@ -91,7 +95,7 @@ exports.completedAppoinment = async (req, res, next) => {
         const completedAppoinmentdtls = await appoinmentOrder
             .findOneAndUpdate(
                 { orderBy: req.body.orderBy },
-                 req.body.completedAppoinment,
+                req.body.completedAppoinment,
                 { new: true });
 
         if (!completedAppoinmentdtls) {
@@ -113,13 +117,13 @@ exports.completedAppoinment = async (req, res, next) => {
 exports.testDrugOrder = async (req, res, next) => {
     try {
         const order = await appoinmentOrder.findOneAndUpdate(
-             req.body.orderBy ,
+            req.body.orderBy,
             {
                 $push: {
                     drug: req.body.drug,
                     test: req.body.test
                 }
-            },{new:true})
+            }, { new: true })
 
         res.status(203).json({
             succes: true,

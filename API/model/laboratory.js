@@ -34,7 +34,7 @@ const laboratorySchema = mongoose.Schema({
     },
     closetime: {
         type: Date
-    },
+    }
 });
 
 

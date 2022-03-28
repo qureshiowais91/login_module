@@ -1,4 +1,4 @@
-const order = require("../model/appoinmentOrder");
+const order = require("../model/order");
 const drug = require("../model/drug");
 const test = require("../model/test");
 
@@ -100,8 +100,9 @@ exports.insertAppoinment = async (req, res, next) => {
             .status(200)
             .json({
                 success: true,
-                appoinment: newAppoinment
+                data: newAppoinment
             });
+            
     } catch (error) {
         next(error);
     }
