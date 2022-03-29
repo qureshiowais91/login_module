@@ -1,4 +1,4 @@
-const order = require("../model/appoinmentOrder");
+const appoinment = require("../model/appoinment");
 const doctor = require("../model/doctor");
 const patient = require("../model/patient");
 const pharmacy = require("../model/pharmacy");
@@ -7,18 +7,18 @@ const drug = require("../model/drug");
 
 const ErrorResponse = require("../utils/errorResponse");
 
-exports.deleteOrder = async (req, res, next) => {
+exports.deleteAppoinment = async (req, res, next) => {
     try {
-        const deletedOrder = await order.findOneAndDelete({ orderBy: req.body.orderBy });
-        if (!deletedOrder) {
-            throw new ErrorResponse("Delete Not performed", 404);
+        const deletedAppoinment = await appoinment.findOneAndDelete(req.body);
+        if (!deletedAppoinment) {
+            throw new ErrorResponse("Document May Not Exist", 404);
         }
 
         res
             .status(200)
             .json({
                 success: true,
-                data: deletedOrder
+                deletedDocument: deletedAppoinment
             });
     } catch (error) {
         next(error);

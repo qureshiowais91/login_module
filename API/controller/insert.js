@@ -1,8 +1,42 @@
-const order = require("../model/order");
+const appoinment = require("../model/appoinment");
 const drug = require("../model/drug");
 const test = require("../model/test");
 
+
 const ErrorResponse = require("../utils/errorResponse");
+
+exports.insertAppoinment = async (req, res, next) => {
+    try {
+        const {
+            patient_id,
+            doctor_id,
+            time,
+            completed
+        } = req.body;
+
+        const newApponment = await appoinment.create({
+            patient_id,
+            doctor_id,
+            time,
+            completed
+        });
+
+        if (!newApponment) {
+            throw new ErrorResponse("Appoinment Not Created", 304);
+        }
+
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                data: newApponment
+            })
+
+    } catch (error) {
+        next(error);
+    }
+}
 
 exports.insertDrug = async (req, res, next) => {
     try {
@@ -72,39 +106,3 @@ exports.insertTest = async (req, res, next) => {
         next(error);
     }
 }
-
-exports.insertAppoinment = async (req, res, next) => {
-    try {
-
-        const {
-            orderBy,
-            appoinmentWith,
-            fees,
-            time,
-            completed
-        } = req.body
-
-        const newAppoinment = await order.create({
-            orderBy,
-            appoinmentWith,
-            fees,
-            time,
-            completed
-        });
-
-        if (!newAppoinment) {
-            throw new ErrorResponse("Appoinment Not Created", 400);
-        }
-
-        res
-            .status(200)
-            .json({
-                success: true,
-                data: newAppoinment
-            });
-            
-    } catch (error) {
-        next(error);
-    }
-}
-

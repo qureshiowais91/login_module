@@ -8,7 +8,7 @@ const errorHandler = require("./API/middleware/error");
 const auth = require("./API/router/auth");
 const find = require("./API/router/find");
 const update = require("./API/router/update");
-const order = require("./API/router/order");
+const appoinment = require("./API/router/appoinment");
 const drug = require("./API/router/drug");
 const test = require("./API/router/test");
 
@@ -45,8 +45,8 @@ app.use("/user", cors(corsOptions), find);
 app.use("/drug", cors(corsOptions), drug);
 app.use("/test", cors(corsOptions), test);
 
-// Router Order
-app.use("/order", cors(corsOptions), order);
+// Router appoinment
+app.use("/appoinment", cors(corsOptions), appoinment);
 
 // Middleware
 app.use(errorHandler);

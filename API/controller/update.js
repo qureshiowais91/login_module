@@ -7,7 +7,7 @@ const drug = require("../model/drug");
 const test = require("../model/test");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
-const appoinmentOrder = require("../model/order");
+const appoinment = require("../model/appoinment");
 
 // update account details based on roles
 exports.updateAccountDetls = async (req, res, next) => {
@@ -92,13 +92,10 @@ exports.updateTest = async (req, res, next) => {
 
 exports.completedAppoinment = async (req, res, next) => {
     try {
-        const completedAppoinmentdtls = await appoinmentOrder
-            .findOneAndUpdate(
-                { orderBy: req.body.orderBy },
-                req.body.completedAppoinment,
-                { new: true });
+        const completedAppoinment= await appoinment
+            .findByIdAndUpdate (req.body, { completed: req.body.completed }, { new: true });
 
-        if (!completedAppoinmentdtls) {
+        if (!completedAppoinment) {
             throw new ErrorResponse("Could Not Update", 300);
         }
 
@@ -106,31 +103,10 @@ exports.completedAppoinment = async (req, res, next) => {
             .status(203)
             .json({
                 succes: true,
-                data: completedAppoinmentdtls
+                data: completedAppoinment
             });
     } catch (error) {
         next(error);
     }
 }
 
-
-exports.testDrugOrder = async (req, res, next) => {
-    try {
-        const order = await appoinmentOrder.findOneAndUpdate(
-            req.body.orderBy,
-            {
-                $push: {
-                    drug: req.body.drug,
-                    test: req.body.test
-                }
-            }, { new: true })
-
-        res.status(203).json({
-            succes: true,
-            data: order
-        })
-
-    } catch (error) {
-        next(error);
-    }
-}

@@ -26,9 +26,6 @@ const doctorSchema = mongoose.Schema({
     mobile: {
         type: String,
     },
-    birthdate: {
-        type: Date
-    },
     city: {
         type: String
     },

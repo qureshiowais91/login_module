@@ -46,8 +46,5 @@ const patientSchema = mongoose.Schema({
 //     foreignField: 'carts',
 //     justOne: true
 // });
-
 module.exports = mongoose.model("Patient", patientSchema);
-
-
 // in patient populate cart 

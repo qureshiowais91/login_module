@@ -34,6 +34,19 @@ const laboratorySchema = mongoose.Schema({
     },
     closetime: {
         type: Date
+    },
+    order: {
+        patient: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Patient",
+            require: true
+        },
+        time: {
+            type: Date
+        },
+        completed: {
+            type: String
+        }
     }
 });
 
