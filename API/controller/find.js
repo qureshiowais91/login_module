@@ -173,7 +173,7 @@ exports.findTest = async (req, res, next) => {
     try {
         let queryString = JSON.stringify(req.query);
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-        console.log(Date(queryString.time));
+        
         const testFound = await test.find(JSON.parse(queryString));
 
         if (!testFound) {

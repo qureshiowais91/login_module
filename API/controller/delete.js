@@ -4,6 +4,7 @@ const patient = require("../model/patient");
 const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
 const drug = require("../model/drug");
+const test = require("../model/test");
 
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -68,6 +69,26 @@ exports.deleteDrug = async (req, res, next) => {
             .json({
                 success: true,
                 data: deletedDrug
+            });
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+exports.deleteTest = async (req, res, next) => {
+    try {
+        const deletedTest = await test.findByIdAndDelete(req.body);
+        if (!deletedTest) {
+            throw new ErrorResponse("Drug Might Not Deleted", 300);
+        }
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                data: deletedTest
             });
 
     } catch (error) {

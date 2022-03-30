@@ -1,10 +1,43 @@
 const appoinment = require("../model/appoinment");
+const order = require("../model/order");
 const drug = require("../model/drug");
 const test = require("../model/test");
 
 
 const ErrorResponse = require("../utils/errorResponse");
+exports.insertOrder = async (req, res, next) => {
+    try {
+        const {
+            patient_id,
+            drug_id,
+            pharmacy_id,
+            test_id,
+            laboratory_id,
+            completed
+        } = req.body
 
+        const orderinfo = await order.create({
+            patient_id,
+            drug_id,
+            pharmacy_id,
+            test_id,
+            laboratory_id,
+            completed
+        });
+
+        if (!orderinfo) {
+            throw new ErrorResponse("order May not Created", 303);
+        }
+        res
+            .status(200)
+            .json({
+                success: true,
+                data: orderinfo
+            })
+    } catch (error) {
+        next(error);
+    }
+}
 exports.insertAppoinment = async (req, res, next) => {
     try {
         const {

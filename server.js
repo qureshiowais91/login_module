@@ -11,6 +11,7 @@ const update = require("./API/router/update");
 const appoinment = require("./API/router/appoinment");
 const drug = require("./API/router/drug");
 const test = require("./API/router/test");
+const order = require("./API/router/order");
 
 // Cors and Assing PORT
 const cors = require("cors");
@@ -47,7 +48,7 @@ app.use("/test", cors(corsOptions), test);
 
 // Router appoinment
 app.use("/appoinment", cors(corsOptions), appoinment);
-
+app.use("/order",cors(corsOptions),order);
 // Middleware
 app.use(errorHandler);
 

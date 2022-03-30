@@ -8,6 +8,7 @@ const test = require("../model/test");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
 const appoinment = require("../model/appoinment");
+const order = require("../model/order");
 
 // update account details based on roles
 exports.updateAccountDetls = async (req, res, next) => {
@@ -82,7 +83,7 @@ exports.updateTest = async (req, res, next) => {
             .status(201)
             .json({
                 succes: true,
-                updatedDrug
+                updatedTest
             });
 
     } catch (error) {
@@ -92,8 +93,8 @@ exports.updateTest = async (req, res, next) => {
 
 exports.completedAppoinment = async (req, res, next) => {
     try {
-        const completedAppoinment= await appoinment
-            .findByIdAndUpdate (req.body, { completed: req.body.completed }, { new: true });
+        const completedAppoinment = await appoinment
+            .findByIdAndUpdate(req.body, { completed: req.body.completed }, { new: true });
 
         if (!completedAppoinment) {
             throw new ErrorResponse("Could Not Update", 300);
@@ -110,3 +111,32 @@ exports.completedAppoinment = async (req, res, next) => {
     }
 }
 
+exports.updateOrder = async (req, res, next) => {
+    try {
+        const {
+            drug_id,
+            test_id
+        } = req.body;
+
+        const orderUpdated = order.findOneAndUpdate({ patient_id: req.body.patient_id }, {
+            $push: {
+                drug_id: req.body.drug_id,
+                test_id: req.body.test_id
+            }
+        });
+
+        if (!orderUpdated) {
+            throw new ErrorResponse("order may not updated", 304);
+        }
+
+        res
+            .status(200)
+            .json({
+                succes: true,
+                data: orderUpdated
+            });
+
+    } catch (error) {
+        next(error);
+    }
+}

@@ -3,10 +3,10 @@ const { mongoose } = require("mongoose");
 const testSchema = mongoose.Schema({
     addedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Pharmacy",
+        ref: "Laboratory",
         require: true
     },
-    testName: {
+    test: {
         type: String
     },
     price: {
