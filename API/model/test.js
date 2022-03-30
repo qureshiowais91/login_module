@@ -6,7 +6,7 @@ const testSchema = mongoose.Schema({
         ref: "Laboratory",
         require: true
     },
-    test: {
+    testname: {
         type: String
     },
     price: {

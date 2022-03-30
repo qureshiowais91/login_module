@@ -117,13 +117,13 @@ exports.insertTest = async (req, res, next) => {
         }
 
         const {
-            test,
+            testname,
             price,
         } = req.body;
 
         const addedTest = await test.create({
             addedBy,
-            test,
+            testname,
             price,
         });
 
