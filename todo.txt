@@ -28,26 +28,6 @@
 
 Add relation in patient [of docs]
 
-// user/Search
-// POST
-//      Username
-// <return full profile>
-
-// POST
-//      Username
-// <return full pr
-// user/Search
-// POST 
-//      Role
-// <return full profile>
-
-// user/Search
-// POST 
-//      Role
-//      fees range
-// <return full profile>
-// user/Update
-// POST
 _________________________
 if mediene info is not post send 15 
 by pagination

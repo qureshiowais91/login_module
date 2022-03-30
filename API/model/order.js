@@ -19,12 +19,19 @@ const orderSchema = mongoose.Schema({
     drug_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Drug",
-        require: true
+        require: true,
     }],
-    test_id:[{
+    quantity_drug: [{
+        type: Number
+    }],
+    test_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Test",
-        require: true
+        require: true,
+        unique: true
+    }],
+    quantity_test: [{
+        type: Number
     }],
     completed: {
         type: Boolean

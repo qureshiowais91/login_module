@@ -5,6 +5,7 @@ const laboratory = require("../model/laboratory");
 const drug = require("../model/drug");
 const test = require("../model/test");
 const appoinment = require("../model/appoinment");
+const order = require("../model/order");
 
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
@@ -173,7 +174,7 @@ exports.findTest = async (req, res, next) => {
     try {
         let queryString = JSON.stringify(req.query);
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-        
+
         const testFound = await test.find(JSON.parse(queryString));
 
         if (!testFound) {
@@ -215,4 +216,25 @@ exports.findAppoinment = async (req, res, next) => {
     }
 }
 
+exports.findOrder = async (req, res, next) => {
+    try {
+        let queryString = JSON.stringify(req.query);
 
+        queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+        console.log(JSON.parse(queryString))
+        const foundOrder = await order.find(JSON.parse(queryString)).populate({ path:"drug_id patient_id pharmacy_id laboratory_id test_id"});
+
+        if (!foundOrder) {
+            throw new ErrorResponse("appoinments not found", 404);
+        }
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                foundOrder
+            })
+    } catch (error) {
+        next(error)
+    }
+}

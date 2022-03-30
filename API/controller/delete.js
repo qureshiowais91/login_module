@@ -5,7 +5,7 @@ const pharmacy = require("../model/pharmacy");
 const laboratory = require("../model/laboratory");
 const drug = require("../model/drug");
 const test = require("../model/test");
-
+const order =require("../model/order");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.deleteAppoinment = async (req, res, next) => {
@@ -91,6 +91,25 @@ exports.deleteTest = async (req, res, next) => {
                 data: deletedTest
             });
 
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+exports.deleteOrder = async (req, res, next) => {
+    try {
+        const deletedOrder = await order.findByIdAndDelete(req.body);
+        if (!deletedOrder) {
+            throw new ErrorResponse("Document Might Not Be Deleted", 302);
+        }
+
+        res
+            .status(200)
+            .json({
+                success: true,
+                data: deletedOrder
+            })
     } catch (error) {
         next(error);
     }
