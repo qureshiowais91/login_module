@@ -220,21 +220,25 @@ exports.findOrder = async (req, res, next) => {
     try {
         let queryString = JSON.stringify(req.query);
 
-        queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-        console.log(JSON.parse(queryString))
-        const foundOrder = await order.find(JSON.parse(queryString)).populate({ path:"drug_id patient_id pharmacy_id laboratory_id test_id"});
+        queryString = queryString
+            .replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+        const foundOrder = await order
+            .find(JSON.parse(queryString))
+            .populate({ path: "drug_id patient_id pharmacy_id laboratory_id test_id" });
 
         if (!foundOrder) {
             throw new ErrorResponse("appoinments not found", 404);
         }
-
+        
         res
             .status(200)
             .json({
                 success: true,
                 foundOrder
-            })
+            });
+
     } catch (error) {
-        next(error)
+        next(error);
     }
 }

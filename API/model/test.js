@@ -11,7 +11,7 @@ const testSchema = mongoose.Schema({
     },
     price: {
         type: Number
-    },
+    }
 });
 
 module.exports = mongoose.model("Test", testSchema);
