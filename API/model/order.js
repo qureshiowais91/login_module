@@ -27,8 +27,7 @@ const orderSchema = mongoose.Schema({
     test_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Test",
-        require: true,
-        unique: true
+        require: true
     }],
     quantity_test: [{
         type: Number
