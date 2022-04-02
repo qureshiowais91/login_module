@@ -22,5 +22,4 @@ router
     .route("/deleteByName")
     .post(deleteDrug);
 
-
 module.exports = router

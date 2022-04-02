@@ -19,7 +19,7 @@ const orderSchema = mongoose.Schema({
     drug_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Drug",
-        require: true,
+        require: true
     }],
     quantity_drug: [{
         type: Number

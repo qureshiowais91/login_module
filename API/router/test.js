@@ -5,16 +5,18 @@ const { insertTest } = require("../controller/insert");
 const { findTest } = require("../controller/find");
 const { updateTest } = require("../controller/update");
 const { deleteTest } = require("../controller/delete");
+const pagination  =require("../middleware/pagination");
+const test = require("../model/test");
 
 router
     .route("/find")
-    .post(findTest);
+    .post(pagination(test),findTest);
 
 router
     .route("/insert")
     .post(insertTest);
 
-router
+router  
     .route("/update")
     .post(updateTest);
 
