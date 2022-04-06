@@ -84,7 +84,9 @@ exports.insertDrug = async (req, res, next) => {
             company,
             price,
             power,
-            level } = req.body;
+            level,
+            quantity
+             } = req.body;
 
         const addedDrug = await drug.create({
             addedBy,
@@ -92,7 +94,8 @@ exports.insertDrug = async (req, res, next) => {
             company,
             price,
             power,
-            level
+            level,
+            quantity
         });
 
         if (!addedDrug) {
