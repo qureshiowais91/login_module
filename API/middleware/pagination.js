@@ -3,14 +3,14 @@ const pagination = (model) => {
         var page = parseInt(req.query.page);
         var limit = parseInt(req.query.limit);
 
-        if (!limit || limit > 25) {
-            limit = 15;
-        }
+        // if (!limit || limit > 25) {
+        //     limit = 15;
+        // }
 
 
-        if (!page) {
-            page = 1;
-        }
+        // if (!page) {
+        //     page = 1;
+        // }
 
 
         const startIndex = (page - 1) * limit;

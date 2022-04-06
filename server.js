@@ -6,8 +6,7 @@ const errorHandler = require("./API/middleware/error");
 
 //register and login = auth
 const auth = require("./API/router/auth");
-const find = require("./API/router/find");
-const update = require("./API/router/update");
+const user = require("./API/router/user");
 const appoinment = require("./API/router/appoinment");
 const drug = require("./API/router/drug");
 const test = require("./API/router/test");
@@ -41,8 +40,7 @@ app.use(express.json());
 
 // Router User
 app.use("/user", cors(corsOptions), auth);
-app.use("/user", cors(corsOptions), update);
-app.use("/user", cors(corsOptions), find);
+app.use("/user", cors(corsOptions), user);
 
 // Router pharmacy
 app.use("/drug", cors(corsOptions), drug);
@@ -51,6 +49,8 @@ app.use("/test", cors(corsOptions), test);
 // Router appoinment
 app.use("/appoinment", cors(corsOptions), appoinment);
 app.use("/order", cors(corsOptions), order);
+// app.use("/diagnosis",cors(corsOptions),diagnosis);
+
 // Middleware
 app.use(errorHandler);
 

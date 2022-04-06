@@ -3,6 +3,8 @@ const { deleteOrder } = require("../controller/delete");
 const { insertOrder } = require("../controller/insert");
 const {updateOrder} =require("../controller/update");
 const {findOrder}  = require("../controller/find");
+const pagination = require("../middleware/pagination");
+const order = require("../model/order");
 
 const router = express.Router();
 
@@ -22,5 +24,5 @@ router
 
 router
     .route("/find")
-    .post(findOrder);
+    .post(pagination(order),findOrder);
 module.exports = router

@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://127.0.0.1:3000/test/find",
+            "request": "launch",
+            "url": "http://127.0.0.1:3000/test/find"
+        }
+    ]
+}

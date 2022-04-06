@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { insertDrug } = require("../controller/insert");
-const { findDrug, findDrugByPrice } = require("../controller/find");
+const { findDrug } = require("../controller/find");
 const { updateDrug } = require("../controller/update");
 const { deleteDrug } = require("../controller/delete");
 
@@ -19,7 +19,7 @@ router
     .post(updateDrug);
 
 router
-    .route("/deleteByName")
+    .route("/delete")
     .post(deleteDrug);
 
 module.exports = router

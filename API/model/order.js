@@ -8,26 +8,22 @@ const orderSchema = mongoose.Schema({
     },
     pharmacy_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Pharmacy",
-        require: true
+        ref: "Pharmacy"
     },
     laboratory_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Laboratory",
-        require: true
+        ref: "Laboratory"
     },
     drug_id: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Drug",
-        require: true
+        ref: "Drug"
     }],
-    quantity_drug: [{
+    quantity_drug: [{   
         type: Number
     }],
     test_id: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Test",
-        require: true
+        ref: "Test"
     }],
     quantity_test: [{
         type: Number
