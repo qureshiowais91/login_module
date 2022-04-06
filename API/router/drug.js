@@ -19,7 +19,7 @@ router
     .post(updateDrug);
 
 router
-    .route("/deleteByName")
+    .route("/delete")
     .post(deleteDrug);
 
 module.exports = router
