@@ -86,8 +86,7 @@ exports.findByCity = async (req, res, next) => {
             case process.env.Doctor:
                 console.log(req.body);
                 userFound = await doctor.find({
-                    address:
-                        { city: req.body.address.city }
+                    address: { city: req.body.address.city }
                 });
                 break;
             case process.env.Pharmacy:
@@ -206,7 +205,9 @@ exports.findAppoinment = async (req, res, next) => {
 
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
         console.log(JSON.parse(queryString))
-        const foundAppoinment = await appoinment.find(JSON.parse(queryString)).populate({ path: "patient_id doctor_id" });
+        const foundAppoinment = await appoinment
+            .find(JSON.parse(queryString))
+            .populate({ path: "patient_id doctor_id" });
 
         if (!foundAppoinment) {
             throw new ErrorResponse("appoinments not found", 404);
