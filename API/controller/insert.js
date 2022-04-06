@@ -86,7 +86,7 @@ exports.insertDrug = async (req, res, next) => {
             power,
             level,
             quantity
-             } = req.body;
+        } = req.body;
 
         const addedDrug = await drug.create({
             addedBy,
