@@ -20,7 +20,7 @@ const pagination = (model) => {
 
 
         result.curr = {
-            page: page,
+            page: startIndex,
             limit: limit
         }
         if (endIndex < await model.countDocuments().exec()) {

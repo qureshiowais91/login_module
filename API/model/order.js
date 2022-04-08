@@ -18,7 +18,7 @@ const orderSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Drug"
     }],
-    quantity_drug: [{   
+    quantity_drug: [{
         type: Number
     }],
     test_id: [{

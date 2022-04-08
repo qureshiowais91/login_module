@@ -11,6 +11,12 @@ const appoinmentSchema = mongoose.Schema({
         ref: "Patient",
         require: true
     },
+    drug: [{
+        type: String
+    }],
+    test: [{
+        type: String
+    }],
     time: {
         type: Date
     },

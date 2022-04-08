@@ -26,7 +26,7 @@ const app = express();
 
 // specify the allowed domains and set corsOptions to check them
 var whitelist = ['http://localhost:5500', 'http://127.0.0.1:5500',
-    'http://127.0.0.1:3000', 'http://localhost:3000','https://stellar-sherbet-34a4c1.netlify.app'];
+    'http://127.0.0.1:3000', 'http://localhost:3000', 'https://stellar-sherbet-34a4c1.netlify.app'];
 
 var corsOptions = {
     origin: function (origin, callback) {

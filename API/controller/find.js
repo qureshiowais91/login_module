@@ -155,13 +155,22 @@ exports.findDrug = async (req, res, next) => {
         let queryString = JSON.stringify(req.query);
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
-        const foundDrug = await drug.find(JSON.parse(queryString));
+
+        const limit = res.paginationData.curr.limit;
+        const page = res.paginationData.curr.page;
+
+        const foundDrug = await drug
+            .find(JSON.parse(queryString))
+            .limit(limit)
+            .skip(page)
+            .populate({ path: "addedBy" });
 
         res
             .status(200)
             .json({
                 success: true,
-                drug: foundDrug
+                data: foundDrug,
+                page: res.paginationData
             });
 
     } catch (error) {
@@ -203,11 +212,20 @@ exports.findAppoinment = async (req, res, next) => {
     try {
         let queryString = JSON.stringify(req.query);
 
-        queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-        console.log(JSON.parse(queryString))
+        queryString = queryString
+            .replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+        const limit = res.paginationData.curr.limit;
+        const page = res.paginationData.curr.page;
+
+
         const foundAppoinment = await appoinment
             .find(JSON.parse(queryString))
+            .limit(limit)
+            .skip(page)
             .populate({ path: "patient_id doctor_id" });
+
+        console.log(queryString);
 
         if (!foundAppoinment) {
             throw new ErrorResponse("appoinments not found", 404);
@@ -217,8 +235,10 @@ exports.findAppoinment = async (req, res, next) => {
             .status(200)
             .json({
                 success: true,
-                foundAppoinment
-            })
+                page: res.paginationData,
+                data: foundAppoinment
+            });
+
     } catch (error) {
         next(error)
     }

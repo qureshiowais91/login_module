@@ -3,8 +3,10 @@ const router = express.Router();
 
 const { insertAppoinment} = require("../controller/insert");
 const { findAppoinment } = require("../controller/find");
-const { completedAppoinment } = require("../controller/update");
+const { completedAppoinment, appoinmentPrescription } = require("../controller/update");
 const { deleteAppoinment } = require("../controller/delete");
+const pagination = require("../middleware/pagination");
+const appoinment = require("../model/appoinment");
 
 router
     .route("/insert")
@@ -12,11 +14,15 @@ router
 
 router
     .route("/find")
-    .post(findAppoinment);
+    .post(pagination(appoinment),findAppoinment);
+
+router
+    .route("/completed")
+    .post(completedAppoinment);
 
 router
     .route("/update")
-    .post(completedAppoinment);
+    .post(appoinmentPrescription);
     
 router
     .route("/delete")

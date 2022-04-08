@@ -91,6 +91,39 @@ exports.updateTest = async (req, res, next) => {
     }
 }
 
+
+exports.appoinmentPrescription = async (req, res, next) => {
+    try {
+
+        const {
+           _id,
+        } = req.body;
+
+
+        const appoinmentPres = await appoinment
+            .findByIdAndUpdate(_id, {
+                $push: {
+                    drug: req.body.drug,
+                    test: req.body.test
+                }
+            }, { new: true });
+
+        if (!appoinmentPres) {
+            throw new ErrorResponse("Could Not Update", 300);
+        }
+
+        res
+            .status(200)
+            .json({
+                succes: true,
+                data: appoinmentPres
+            });
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 exports.completedAppoinment = async (req, res, next) => {
     try {
         const completedAppoinment = await appoinment
