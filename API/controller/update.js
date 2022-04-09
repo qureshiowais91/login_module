@@ -96,7 +96,7 @@ exports.appoinmentPrescription = async (req, res, next) => {
     try {
 
         const {
-           _id,
+            _id,
         } = req.body;
 
 
@@ -105,6 +105,38 @@ exports.appoinmentPrescription = async (req, res, next) => {
                 $push: {
                     drug: req.body.drug,
                     test: req.body.test
+                }
+            }, { new: true });
+
+        if (!appoinmentPres) {
+            throw new ErrorResponse("Could Not Update", 300);
+        }
+
+        res
+            .status(200)
+            .json({
+                succes: true,
+                data: appoinmentPres
+            });
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.appoinmentReport = async (req, res, next) => {
+    try {
+
+        const { _id } = req.body;
+
+        const appoinmentPres = await appoinment
+            .findByIdAndUpdate(_id, {
+                $addToSet: {
+                    report: {
+                        laboratory_id: req.body.laboratory_id,
+                        field1: req.body.field1,
+                        field2: req.body.field2,
+                        field3: req.body.field3
+                    }
                 }
             }, { new: true });
 

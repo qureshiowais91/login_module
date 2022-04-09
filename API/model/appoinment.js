@@ -17,6 +17,21 @@ const appoinmentSchema = mongoose.Schema({
     test: [{
         type: String
     }],
+    report: [{
+        laboratory_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Laboratory"
+        },
+        field1: {
+            type: String
+        },
+        field2: {
+            type: String
+        },
+        field3: {
+            type: String
+        }
+    }],
     time: {
         type: Date
     },
