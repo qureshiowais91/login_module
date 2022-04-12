@@ -16,10 +16,12 @@ const orderSchema = mongoose.Schema({
     },
     drug_id: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Drug"
+        ref: "Drug",
+        unique:false
     }],
     quantity_drug: [{
-        type: Number
+        type: Number,
+        unique: false
     }],
     test_id: [{
         type: mongoose.Schema.Types.ObjectId,
