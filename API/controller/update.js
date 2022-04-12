@@ -183,7 +183,7 @@ exports.updateOrder = async (req, res, next) => {
             test_id
         } = req.body;
 
-        const orderUpdated = await order.findOneAndUpdate(req.body.patient_id,
+        const orderUpdated = await order.findOneAndUpdate(req.body._id,
             {
                 $push: {
                     drug_id: req.body.drug_id,
