@@ -179,11 +179,10 @@ exports.completedAppoinment = async (req, res, next) => {
 exports.updateOrder = async (req, res, next) => {
     try {
         const {
-            drug_id,
-            test_id
+            _id
         } = req.body;
 
-        const orderUpdated = await order.findByIdAndUpdate(req.body,
+        const orderUpdated = await order.findByIdAndUpdate(_id,
             {
                 $push: {
                     drug_id: req.body.drug_id,
