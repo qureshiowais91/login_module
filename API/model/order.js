@@ -15,7 +15,7 @@ const orderSchema = mongoose.Schema({
         ref: "Laboratory"
     },
     appoinment_id: [{
-        type: monoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Appoinment"
     }],
     drug_id: [{
