@@ -156,13 +156,8 @@ exports.findDrug = async (req, res, next) => {
         queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
 
-        const limit = res.paginationData.curr.limit;
-        const page = res.paginationData.curr.page;
-
         const foundDrug = await drug
             .find(JSON.parse(queryString))
-            .limit(limit)
-            .skip(page)
             .populate({ path: "addedBy" });
 
         res

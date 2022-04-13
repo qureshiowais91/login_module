@@ -13,6 +13,7 @@ exports.insertOrder = async (req, res, next) => {
             pharmacy_id,
             test_id,
             laboratory_id,
+            appoinment_id,
             completed,
             quantity_drug,
             quantity_test
@@ -26,6 +27,7 @@ exports.insertOrder = async (req, res, next) => {
             laboratory_id,
             quantity_drug,
             quantity_test,
+            appoinment_id,
             completed
         });
 
