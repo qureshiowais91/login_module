@@ -160,7 +160,7 @@ exports.completedAppoinment = async (req, res, next) => {
     try {
         const completedAppoinment = await appoinment
             .findByIdAndUpdate(req.body, { completed: req.body.completed }, { new: true });
-
+        console.log(completedAppoinment);
         if (!completedAppoinment) {
             throw new ErrorResponse("Could Not Update", 300);
         }
@@ -209,6 +209,25 @@ exports.updateOrder = async (req, res, next) => {
                 data: orderUpdated
             });
 
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.completedOrder = async (req, res, next) => {
+    try {
+        const completedOrder = await order
+            .findByIdAndUpdate(req.body, { completed: req.body.completed }, { new: true });
+        if (!completedOrder) {
+            throw new ErrorResponse("Could Not Update", 300);
+        }
+
+        res
+            .status(203)
+            .json({
+                succes: true,
+                data: completedOrder
+            });
     } catch (error) {
         next(error);
     }
