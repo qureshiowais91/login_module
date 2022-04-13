@@ -86,7 +86,7 @@ exports.findByCity = async (req, res, next) => {
             case process.env.Doctor:
                 console.log(req.body);
                 userFound = await doctor.find({
-                    address: { city: req.body.address.city }
+                   city: req.body.address.city 
                 });
                 break;
             case process.env.Pharmacy:

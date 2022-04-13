@@ -182,7 +182,7 @@ exports.updateOrder = async (req, res, next) => {
             drug_id,
             test_id
         } = req.body;
-       
+
         const orderUpdated = await order.findByIdAndUpdate(req.body,
             {
                 $push: {
@@ -195,14 +195,13 @@ exports.updateOrder = async (req, res, next) => {
             new: true
         });
 
-        
+
         // console.log(orderUpdated);
         console.log(req.body._id);
         console.log(orderUpdated);
         if (!orderUpdated) {
             throw new ErrorResponse("order may not updated", 304);
         }
-
         res
             .status(200)
             .json({
