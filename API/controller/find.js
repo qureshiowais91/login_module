@@ -86,7 +86,7 @@ exports.findByCity = async (req, res, next) => {
             case process.env.Doctor:
                 console.log(req.body);
                 userFound = await doctor.find({
-                   city: req.body.address.city 
+                    city: req.body.address.city
                 });
                 break;
             case process.env.Pharmacy:
@@ -261,7 +261,7 @@ exports.findOrder = async (req, res, next) => {
         if (!foundOrder) {
             throw new ErrorResponse("appoinments not found", 404);
         }
-        console.log(foundOrder);
+
         res
             .status(200)
             .json({

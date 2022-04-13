@@ -13,7 +13,9 @@ exports.insertOrder = async (req, res, next) => {
             pharmacy_id,
             test_id,
             laboratory_id,
-            completed
+            completed,
+            quantity_drug,
+            quantity_test
         } = req.body
 
         const orderinfo = await order.create({
@@ -22,6 +24,8 @@ exports.insertOrder = async (req, res, next) => {
             pharmacy_id,
             test_id,
             laboratory_id,
+            quantity_drug,
+            quantity_test,
             completed
         });
 
