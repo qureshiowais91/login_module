@@ -85,9 +85,7 @@ exports.findByCity = async (req, res, next) => {
         switch (req.body.role) {
             case process.env.Doctor:
                 console.log(req.body);
-                userFound = await doctor.find({
-                    city: req.body.city
-                });
+                userFound = await doctor.find({ city: req.body.city });
                 break;
             case process.env.Pharmacy:
                 userFound = await pharmacy.find({ city: new RegExp('^' + escapeRegExp(req.body.city) + '$', "i") });

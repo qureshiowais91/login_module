@@ -6,33 +6,36 @@ const orderSchema = mongoose.Schema({
         ref: "Patient",
         require: true
     },
-    pharmacy_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Pharmacy"
-    },
-    laboratory_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Laboratory"
-    },
-    appoinment_id: [{
+    appoinment_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Appoinment"
+    },
+    drug: [{
+        pharmacy_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Pharmacy"
+        },
+        name: {
+            type: String,
+        },
+        price: {
+            type: Number
+        },
+        quantity_drug: {
+            type: Number
+        }
     }],
-    drug_id: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Drug",
-        unique: false
-    }],
-    quantity_drug: [{
-        type: Number,
-        unique: false
-    }],
-    test_id: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Test"
-    }],
-    quantity_test: [{
-        type: Number
+    test: [{
+        laboratory_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Laboratory"
+        },
+        name: {
+            type: String,
+        },
+        price: {
+            type: Number
+        }
     }],
     completed: {
         type: Boolean

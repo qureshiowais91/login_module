@@ -182,22 +182,21 @@ exports.updateOrder = async (req, res, next) => {
             _id
         } = req.body;
 
-        const orderUpdated = await order.findByIdAndUpdate(_id,
+        console.log(req.body);
+        const orderUpdated = await order.findOneAndUpdate({ "_id": _id },
             {
-                $push: {
-                    drug_id: req.body.drug_id,
-                    test_id: req.body.test_id,
-                    quantity_drug: req.body.quantity_drug,
-                    quantity_test: req.body.quantity_test
+                $addToSet: {
+                    drug: {
+                        pharmacy_id: req.body.drug.pharmacy_id,
+                        name: req.body.drug.name,
+                        print: req.body.drug.price,
+                        quantity_drug: req.body.drug.quantity_drug
+                    }
                 }
             }, {
             new: true
         });
 
-
-        // console.log(orderUpdated);
-        console.log(req.body._id);
-        console.log(orderUpdated);
         if (!orderUpdated) {
             throw new ErrorResponse("order may not updated", 304);
         }

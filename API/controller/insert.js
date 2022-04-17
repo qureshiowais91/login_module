@@ -5,45 +5,38 @@ const test = require("../model/test");
 
 
 const ErrorResponse = require("../utils/errorResponse");
+
 exports.insertOrder = async (req, res, next) => {
     try {
         const {
             patient_id,
-            drug_id,
-            pharmacy_id,
-            test_id,
-            laboratory_id,
             appoinment_id,
-            completed,
-            quantity_drug,
-            quantity_test
-        } = req.body
+            drug: [{
+                quantity_drug,
+            }],
+            test: [{
+                quantity_test,
+            }],
+        } = req.body;
 
-        const orderinfo = await order.create({
-            patient_id,
-            drug_id,
-            pharmacy_id,
-            test_id,
-            laboratory_id,
-            quantity_drug,
-            quantity_test,
-            appoinment_id,
-            completed
-        });
 
-        if (!orderinfo) {
-            throw new ErrorResponse("order May not Created", 303);
+        const insertedOrder = await order.create(req.body);
+        console.log(req.body);
+        if (!insertedOrder) {
+            throw new ErrorResponse("Order is not Inserted", 302);
         }
         res
-            .status(200)
+            .status(201)
             .json({
                 success: true,
-                data: orderinfo
+                data: insertedOrder
             })
     } catch (error) {
         next(error);
     }
 }
+
+
 exports.insertAppoinment = async (req, res, next) => {
     try {
         const {
@@ -133,7 +126,7 @@ exports.insertTest = async (req, res, next) => {
         const addedTest = await test.create({
             addedBy,
             testname,
-            price,
+            price
         });
 
         if (!addedTest) {

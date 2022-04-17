@@ -44,3 +44,22 @@ _____________________________
 
 
 // 
+
+
+what i want to do ?
+
+insert Order with below fields.as i insert order i want patient_id could be diffrent or same 
+and they can by same drug.
+
+patient_id 
+drug_id   
+pharmacy_id
+test_id
+laboratory_id
+quantity_drug
+quantity_test
+appoinment_id
+completed
+
+example 
+ patient buys d1
