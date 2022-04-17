@@ -191,6 +191,11 @@ exports.updateOrder = async (req, res, next) => {
                         name: req.body.drug.name,
                         print: req.body.drug.price,
                         quantity_drug: req.body.drug.quantity_drug
+                    },
+                    test:{
+                        laboratory_id:req.body.test.laboratory_id,
+                        name:req.body.test.name,
+                        price:req.body.test.price
                     }
                 }
             }, {
