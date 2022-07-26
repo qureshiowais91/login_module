@@ -1,0 +1,1068 @@
+{
+	"info": {
+		"_postman_id": "11230f55-4d9f-4137-97bd-2f2f10032ac5",
+		"name": "Wellness",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"username\": \"laboratory1\",\n        \"password\": \"Karlen\",\n        \"role\": \"laboratory\",\n        \"fullname\": \"kgowma\",\n        \"email\": \"kgowma@furl.net\",\n        \"mobile\": \"926-971-6464\",\n        \"address\": \"Frami-Schinner\",\n        \"fees\": 455,\n        \"opentime\": \"2021-06-24\",\n        \"closetime\": \"2022-02-16\"\n}"
+						},
+						"url": {
+							"raw": "{{wellness}}/user/register",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"username\": \"pharma4\",\n    \"password\": \"Karlen\",\n    \"role\": \"pharmacy\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/user/login",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wellness}}user/logout",
+							"host": [
+								"{{wellness}}user"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loggedin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzM5YzBjNzg3ZjRiZmM0MGFkZjk3NyIsImlhdCI6MTY0ODAxODQzNCwiZXhwIjoxNjQ4MTA0ODM0fQ.cCxOWzSkB0eXVmJED2E0ds1EnbgwIOmh6Viz71qYqdo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"patient\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/user/loggedin",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"loggedin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find",
+			"item": [
+				{
+					"name": "FindByUsername",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzg4MTZjYzFkZDkyNDMwZGExM2RlZCIsImlhdCI6MTY0Nzg3MDMxNywiZXhwIjoxNjUwNDYyMzE3fQ.rmehgnaC_4pf1w6EyXsu4io_Z3_sqwZmLe_AaTEMTSI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"username\": \"kgowman0\",\n   \"role\": \"doctor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/user/findByUsername",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"findByUsername"
+							]
+						},
+						"description": "Find by\n\n*   Fullname\n*   username\n*   City"
+					},
+					"response": []
+				},
+				{
+					"name": "FindByFullname",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"fullname\": \"kgowma\",\n    \"role\": \"doctor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/user/findByFullname",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"findByFullname"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindByCity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\":{\n        \"city\":\"newCity\"\n    },\n    \"role\":\"doctor\"\n}"
+						},
+						"url": {
+							"raw": "{{wellness}}user/findByCity",
+							"host": [
+								"{{wellness}}user"
+							],
+							"path": [
+								"findByCity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findSpeciality",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"speciality\": \"Rodriguez Inc\",\n    \"role\":\"doctor\"\n}"
+						},
+						"url": {
+							"raw": "{{wellness}}/user/findSpeciality",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"findSpeciality"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Drug",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/drug/findDrug?addedBy=623af3727ec44c8893dea2d9&level=2&price[lte]=300",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"drug",
+								"findDrug"
+							],
+							"query": [
+								{
+									"key": "addedBy",
+									"value": "623af3727ec44c8893dea2d9"
+								},
+								{
+									"key": "level",
+									"value": "2"
+								},
+								{
+									"key": "price[lte]",
+									"value": "300"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Test",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"addedBy\":\"62339c0c787f4bfc40adf977\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/test/find",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"test",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find order by patient id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/order/findOrder?orderBy=62339c0c787f4bfc40adf977",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"order",
+								"findOrder"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "62339c0c787f4bfc40adf977"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "appoinment find",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/appoinment/find?page=1&limit=1&doctor_id=624d67055855019a35454518",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"appoinment",
+								"find"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "doctor_id",
+									"value": "624d67055855019a35454518"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/drug/findDrug?page=1&limit=10",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"drug",
+								"findDrug"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "addedBy",
+									"value": "623af3727ec44c8893dea2d9",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Insert",
+			"item": [
+				{
+					"name": "Add drug",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2I0MzdhYjNmMmUwODMwZjQzMjBmNCIsInJvbGUiOiJwaGFybWFjeSIsImlhdCI6MTY0ODA1MTA2NiwiZXhwIjoxNjUwNjQzMDY2fQ.Di88pDao4nfLWQl0ygJmfNERhcKqbG44X2IHFrxPUY0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"drugName\":\"tyt N400\",\n    \"company\":\"xyc co\",\n    \"price\":500,\n    \"power\":\"10MG\",\n    \"level\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/drug/insert",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"drug",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert Test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2I2MDllYzUxMzgzYjVkNzI4YTI0ZiIsInJvbGUiOiJsYWJvcmF0b3J5IiwiaWF0IjoxNjQ4MDU4NTI2LCJleHAiOjE2NDgxNDQ5MjZ9.IOBIS6N_hkC6Te9qa4-jlxF_xSyuyX43m8c9LzJRtQ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addedBy\":\"62339c0c787f4bfc40adf977\",\n    \"testName\":\"zyuo\",\n    \"price\":979\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/test/insert",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"test",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Carte And Insert Appoinment\\",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cartOf\":\"62339c0c787f4bfc40adf977\",\n    \"appoinment\":{\n        \"appoinmentWith\":\"6238955c4a4975d98d56b831\",\n        \"fees\":500, \n        \"time\":\"2019-06-12T13:34:00.000\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/cart/insertAppoinmentCart",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"cart",
+								"insertAppoinmentCart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert  test drug order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderBy\":\"62339c0c787f4bfc40adf977\",\n    \"drug\":[\"623b330545e2553b5cf09544\",\"623b35194c4eaa6885764893\"],\n    \"test\":[\"623b612c3cdf8683682fc2ff\",\"623b622709b69581573a4e7b\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/order/insertTestdrug",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"order",
+								"insertTestdrug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "appoinmnet update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \n}"
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/order/update",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"order",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update",
+			"item": [
+				{
+					"name": "Update User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzg5NzZjN2I3Y2RjZDAwNjBkNWMwZiIsImlhdCI6MTY0Nzg3NTk0OCwiZXhwIjoxNjUwNDY3OTQ4fQ.CMm2nK6GVyJsVpV0o8RBx3EJGole931kiCSVuqkRscU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"address\":{\n         \"city\":\"bharuch\",\n        \"state\":\"gujrate\"\n        },\n\n    \"role\":\"doctor\"\n\n}"
+						},
+						"url": {
+							"raw": "{{wellness}}/user/update",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update  drug",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2FmMzcyN2VjNDRjODg5M2RlYTJkOSIsImlhdCI6MTY0ODA1NTUwMywiZXhwIjoxNjQ4MTQxOTAzfQ.iHf9esEOYvbJuV3ssCdPlEqP6kTU7FWETop0jZbUUiQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"623b330545e2553b5cf09544\",\n    \"drugName\":\"updated Drug\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/drug/update",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"drug",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update drug",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"623b330545e2553b5cf09544\",\n    \"drugName\":\"qwer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/drug/update",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"drug",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete",
+			"item": [
+				{
+					"name": "delete orderBy ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderBy\":\"62339c0c787f4bfc40adf977\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/order/delete",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"order",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"6238955c4a4975d98d56b831\",\n    \"role\":\"doctor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/user/delete",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"item": [
+				{
+					"name": "insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addedBy\":\"623b609ec51383b5d728a24f\",\n    \"test\":\"some test\",\n    \"price\":500\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Team Server}}test/insert",
+							"host": [
+								"{{Team Server}}test"
+							],
+							"path": [
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Team Server}}test/find?price[gt]=500",
+							"host": [
+								"{{Team Server}}test"
+							],
+							"path": [
+								"find"
+							],
+							"query": [
+								{
+									"key": "price[gt]",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"623c4e5f0fa8b55062da2d1a\",\n    \"price\":1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Team Server}}test/update",
+							"host": [
+								"{{Team Server}}test"
+							],
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"623c4e5f0fa8b55062da2d1a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Team Server}}test/delete",
+							"host": [
+								"{{Team Server}}test"
+							],
+							"path": [
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patient_id\":\"62339c0c787f4bfc40adf911\",\n    \"drug_id\":[\"62339c0c787f4bfc40adf911\"],\n    \"test_id\":[\"62339c0c787f4bfc40adf911\"],\n    \"pharmacy_id\":\"623ad6e85f9467a2d2427d11\",\n    \"laboratory_id\":\"623b609ec51383b5d728a211\",\n    \"completed\":false\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/order/insert",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"order",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"625be5f032b7876f77f74e1d\",\n     \"drug\":{\n        \"pharmacy_id\":\"623af3727ec44c8893dea2d9\",\n        \"name\":\"sometwo\",\n        \"price\":\"230\",\n        \"quantity_drug\":3\n     },\n     \"test\":{\n        \"laboratory_id\":\"623af3727ec44c8893dea2d9\",\n        \"name\":\"sometwo\",\n        \"price\":\"230\"\n     }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/order/update",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"order",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{wellness}}/order/delete",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"order",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Team Server}}order/find?page=1&limit=5",
+							"host": [
+								"{{Team Server}}order"
+							],
+							"path": [
+								"find"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Completed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\":\"6255a0e69af86f92134b536f\",\n    \"completed\":true\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wellness}}/order/completed",
+							"host": [
+								"{{wellness}}"
+							],
+							"path": [
+								"order",
+								"completed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
