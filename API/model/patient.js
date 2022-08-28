@@ -1,24 +1,50 @@
 const mongoose = require("mongoose");
-const doctor = require("./doctor");
-const user = require("./user");
 
 const patientSchema = mongoose.Schema({
-    profile_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
-    cart: {
-        appoinment: {
-            doctor_id: { type: mongoose.Schema.Types.ObjectId, ref: "doctor" },
-            time: {
-                type: Date
-            },
-            fees: {
-                type: Number
-            }
-        },
+    username: {
+        type: String,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: [true],
+        minlength: [4],
+        select: false
+    },
+    role: {
+        type: String,
+        default: "patient"
+    },
+    fullname: {
+        type: String,
+        MIN: [3],
+        MAX: [100]
+    },
+    email: {
+        type: String,
+    },
+    mobile: {
+        type: String,
+    },
+    birthdate: {
+        type: Date
+    },
+    city: {
+        type: String
     }
+
 });
+// , {
+//     toJSON: { virtuals: true },
+//     toObject: { virtuals: true }
+// }
 
-module.exports = mongoose.model('patient', patientSchema);
 
-
-
-
+// patientSchema.virtual('carts', {
+//     ref: 'Cart',
+//     localField: '_id',
+//     foreignField: 'carts',
+//     justOne: true
+// });
+module.exports = mongoose.model("Patient", patientSchema);
+// in patient populate cart 

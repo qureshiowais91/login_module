@@ -1,0 +1,65 @@
+/doctor/register
+/doctor/login
+/doctor/update
+    proteted and auth
+/doctor/delete
+    proteted and auth
+
+/patient/register
+/patient/login
+/patient/update
+    proteted and auth
+/patient/delete
+    proteted and auth
+
+/lab/register
+/lab/login
+/lab/update
+    proteted and auth
+/lab/delete
+    proteted and auth
+    
+/medical/register
+/medical/login
+/medical/update
+    proteted and auth
+/medical/delete
+    proteted and auth
+
+Add relation in patient [of docs]
+
+_________________________
+if mediene info is not post send 15 
+by pagination
+____________________________
+ medical:id/medicien
+ POST
+ name
+ companey
+ < return medicien >
+_____________________________
+_____________________________
+// user/add/appointment:id/order
+// :id/doctor
+
+
+// 
+
+
+what i want to do ?
+
+insert Order with below fields.as i insert order i want patient_id could be diffrent or same 
+and they can by same drug.
+
+patient_id 
+drug_id   
+pharmacy_id
+test_id
+laboratory_id
+quantity_drug
+quantity_test
+appoinment_id
+completed
+
+example 
+ patient buys d1

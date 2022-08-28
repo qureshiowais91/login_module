@@ -1,22 +1,49 @@
-// const { create } = require("../model/users/user");
+// const { create } = require("../model/doctors/doctor");
 const bcrypt = require("bcryptjs");
-const user = require("../model/user");
-const jwt = require("jsonwebtoken");
+const doctor = require("../model/doctor");
+const patient = require("../model/patient");
+const pharmacy = require("../model/pharmacy");
+const laboratory = require("../model/laboratory");
 // custome class that send error Object to error middleware
 const ErrorResponse = require("../utils/errorResponse");
-// Register User
+const { createToken } = require("../utils/utilsFunction");
 
+// Register doctor
 exports.register = async (req, res, next) => {
 
     try {
-        const account = await user.create(req.body);
-        if (!account) {
-            throw new ErrorResponse('Unable to Register', 302);
+        let account;
+
+        //hash password
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hash(req.body.password, salt);
+
+        // Create User by Checking Role
+        switch (req.body.role) {
+            case process.env.Doctor:
+                account = await doctor.create(req.body);
+                break;
+            case process.env.Pharmacy:
+                account = await pharmacy.create(req.body);
+                break;
+            case process.env.Patient:
+                account = await patient.create(req.body);
+                break;
+            case process.env.Laboratory:
+                account = await laboratory.create(req.body);
+                break;
+            default:
+                throw new ErrorResponse("Invalid Role", 403)
         }
-        console.log(account);   
-        const token = jwt.sign({ id: account._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRE
-        });
+
+        if (!account) {
+            throw new ErrorResponse('Unable to Register', 304);
+        }
+
+        // create signed token
+        // imported from utils
+        const token = createToken(account, req.body.role);
+
         if (!token) {
             throw new ErrorResponse(`Can't Get Account Token`, 302);
         }
@@ -31,7 +58,7 @@ exports.register = async (req, res, next) => {
             .cookie('token', token, option)
             .json({
                 success: true,
-                token
+                token: token
             });
     } catch (error) {
         next(error);
@@ -41,25 +68,41 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        //find user 
-        const account = await user.findOne({ username }).select('+password');
+        //find doctor 
+        let account = false;
+
+        switch (req.body.role) {
+            case process.env.Doctor:
+                account = await doctor.findOne({ username }).select('+password');
+                break;
+            case process.env.Patient:
+                account = await patient.findOne({ username }).select('+password');
+                break;
+            case process.env.Pharmacy:
+                account = await pharmacy.findOne({ username }).select('+password');
+                break;
+            case process.env.Laboratory:
+                account = await laboratory.findOne({ username }).select('+password');
+                break;
+            default:
+                throw new ErrorResponse("Invalid Role", 403);
+        }
 
         //account invalid 
         if (!account) {
-            throw new ErrorResponse('Account Does Not Exist', 403);
+            throw new ErrorResponse('account Does Not Exist', 403);
         }
 
         // check password
         const passwordCheck = await bcrypt.compare(password, account.password);
 
         if (!passwordCheck) {
-            throw new ErrorResponse('Invalid Username or Password', 403);
+            throw new ErrorResponse('Invalid username or Password', 403);
         }
 
         // create signed token
-        const token = jwt.sign({ id: account._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRE
-        });
+        // imported from utils
+        const token = createToken(account);
 
         // set option for cookie
         const option = {
@@ -72,7 +115,56 @@ exports.login = async (req, res, next) => {
             .cookie('token', token, option)
             .json({
                 success: true,
-                token
+                token,
+                account
+            })
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.loggedInUser = async (req, res, next) => {
+    try {
+        let userFound = false;
+        console.log(req.body._id);
+        switch (req.body.role) {
+            case process.env.Doctor:
+                console.log(req.body);
+                userFound = await doctor.find({ _id: req.user._id });
+                break;
+            case process.env.Pharmacy:
+                userFound = await pharmacy.find({ _id: req.user._id });
+                break;
+            case process.env.Patient:
+                userFound = await patient.find({ _id: req.user._id });
+                break;
+            case process.env.Laboratory:
+                userFound = await laboratory.find({ _id: req.user._id });
+                break;
+            default:
+                throw new ErrorResponse("Invalid Role", 403)
+        }
+        if (!userFound) {
+            throw new ErrorResponse("User Not Found", 404);
+        }
+
+        res.status(200).json({
+            success: true,
+            account: userFound
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.logout = (req, res, next) => {
+    try {
+        res
+            .status(200)
+            .cookie("token", "logout", { maxAge: 100 * 100 })
+            .json({
+                success: true,
+                token: "logout"
             })
     } catch (error) {
         next(error);
